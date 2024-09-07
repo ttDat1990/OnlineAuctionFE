@@ -1,0 +1,77 @@
+<div class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            <b>Register</b>
+        </div>
+        <div class="card card-primary">
+            <form [formGroup]="registerForm" (ngSubmit)="register()">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" formControlName="username" class="form-control"
+                            placeholder="Enter username" />
+                        <div style="min-height: 10px;">
+                            <span
+                                [style.visibility]="registerForm.get('username')?.invalid && registerForm.get('username')?.touched ? 'visible' : 'hidden'"
+                                style="color: red;">
+                                <ng-container *ngIf="registerForm.get('username')?.errors?.['required']">
+                                    Username is required.
+                                </ng-container>
+                                <ng-container *ngIf="registerForm.get('username')?.errors?.['minlength']">
+                                    Username must be at least 6 characters long.
+                                </ng-container>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" formControlName="password" class="form-control"
+                            placeholder="Password" />
+                        <div style="min-height: 10px;">
+                            <span
+                                [style.visibility]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched ? 'visible' : 'hidden'"
+                                style="color: red;">
+                                <ng-container *ngIf="registerForm.get('password')?.errors?.['required']">
+                                    Password is required.
+                                </ng-container>
+                                <ng-container *ngIf="registerForm.get('password')?.errors?.['minlength']">
+                                    Password must be at least 6 characters long.
+                                </ng-container>
+                                <ng-container *ngIf="registerForm.get('password')?.errors?.['pattern']">
+                                    Password must contain both letters and numbers.
+                                </ng-container>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group"></div>
+                    <label for="email">Email</label>
+                    <input type="text" id="email" formControlName="email" class="form-control"
+                        placeholder="Enter email" />
+                    <div style="min-height: 10px;">
+                        <span
+                            [style.visibility]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched ? 'visible' : 'hidden'"
+                            style="color: red;">
+                            <ng-container *ngIf="registerForm.get('email')?.errors?.['required']">
+                                Email is required.
+                            </ng-container>
+                            <ng-container *ngIf="registerForm.get('email')?.errors?.['email']">
+                                Invalid email format.
+                            </ng-container>
+                        </span>
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-primary" [disabled]="registerForm.invalid">Register</button>
+
+                    <div style="min-height: 24px;">
+                        <span [style.visibility]="errorMessage != null ? 'visible' : 'hidden'" style="color: red;">
+                            {{ errorMessage }}
+                        </span>
+                    </div>
+                    <p class="mb-0">
+                        <a [routerLink]="['/login']" class="text-center">Already have account?</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
