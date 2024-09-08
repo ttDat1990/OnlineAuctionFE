@@ -1,0 +1,52 @@
+<header class="header-container">
+    <div class="header-left">
+        <!-- Logo -->
+        <div class="logo">
+            <a [routerLink]="['/user/home']" class="logo-a"><i class="fa-solid fa-dragon"></i> Auction</a>
+        </div>
+
+        <!-- Categories -->
+        <div class="categories">
+            <a href="#" class="category-link">Categories</a>
+        </div>
+    </div>
+
+    <div class="header-middle">
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <button type="button" class="btn-search">
+                <i class="fas fa-search"></i>
+            </button>
+            <input type="search" class="form-control" placeholder="Search for brand, model, artist...">
+
+        </div>
+    </div>
+
+    <div class="header-right">
+        <!-- Sell -->
+        <a href="#" class="category-link">Sell</a>
+
+        <!-- Favourite (Heart Icon) -->
+        <a href="#" class="icon-link">
+            <i class="fa-regular fa-heart"></i>
+        </a>
+
+        <!-- Notification (Bell Icon) -->
+        <a href="#" class="icon-link">
+            <i class="fa-regular fa-bell"></i>
+        </a>
+
+        <!-- User Dropdown -->
+        <div class="dropdown">
+            <span class="user-name">
+                {{user.username}}
+            </span>
+            <i class="fas fa-chevron-down"></i>
+            <div class="dropdown-menu">
+                <div>ACCOUNT</div>
+                <a (click)="profile()">Profile</a>
+                <a (click)="logout()">Sign Out</a>
+            </div>
+        </div>
+    </div>
+</header>

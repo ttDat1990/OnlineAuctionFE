@@ -1,0 +1,252 @@
+/* Import font vào file CSS chính hoặc HTML */
+@import url('https://fonts.googleapis.com/css2?family=Basis+Grotesque:wght@400;500;600&display=swap');
+
+/* Đảm bảo phần tử header có khoảng cách cố định từ trái và phải */
+.header-container {
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 500;
+    margin-left: 100px;
+    /* Khoảng cách từ trái */
+    margin-right: 100px;
+    /* Khoảng cách từ phải */
+    justify-content: space-between;
+    font-family: 'Basis Grotesque', sans-serif;
+    /* Áp dụng font */
+    padding: 15px 20px;
+    /* Padding cho header */
+}
+
+.logo-a {
+    text-decoration: none;
+    font-size: 30px;
+    font-weight: 600;
+    color: #03f;
+
+}
+
+/* Phần tử bên trái (logo và categories) */
+
+.header-right {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 5;
+    margin: 0 30px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 45px;
+    flex: 6;
+}
+
+/* Đảm bảo phần giữa (search bar) có chiều rộng còn lại */
+.header-middle {
+    flex: 10;
+    /* Chiếm nhiều không gian hơn so với header-left và header-right */
+    display: flex;
+    justify-content: center;
+}
+
+/* Đảm bảo phần tử tìm kiếm không bo góc và có chiều rộng tối ưu */
+.search-bar {
+    display: flex;
+    align-items: center;
+    max-width: 600px;
+    /* Điều chỉnh chiều rộng tối đa của thanh tìm kiếm */
+    width: 100%;
+}
+
+.search-bar .form-control {
+    border-radius: 0;
+    /* Không bo góc */
+    border: 1px solid #f0f1f5;
+    /* Màu viền */
+    height: 52px;
+    /* Chiều cao */
+    background-color: #f0f1f5;
+    /* Nền giống như nút tìm kiếm */
+    box-shadow: none;
+    /* Bỏ hiệu ứng focus */
+    flex-grow: 1;
+    /* Đảm bảo input chiếm hết không gian còn lại trong thanh tìm kiếm */
+}
+
+.search-bar .btn-search {
+    background-color: #f0f1f5;
+    /* Màu nền giống với input */
+    border: 1px solid #f0f1f5;
+    /* Màu viền */
+    border-radius: 0;
+    /* Không bo góc */
+    height: 52px;
+    /* Chiều cao giống như input */
+    padding: 0 12px;
+    /* Padding cho nút */
+    margin-left: -1px;
+    /* Loại bỏ khoảng cách giữa input và nút */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Căn giữa biểu tượng */
+}
+
+.search-bar .btn-search i {
+    color: #03f !important;
+    /* Đổi màu biểu tượng */
+    font-size: 1.5rem;
+    /* Tăng kích thước biểu tượng */
+}
+
+/* Đảm bảo icon và dropdown có kích thước và màu sắc chính xác */
+.header-right .icon-link {
+    color: #03f;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    /* Nền trong suốt */
+}
+
+.icon-link {
+    text-decoration: none;
+    /* Loại bỏ gạch chân */
+    color: inherit;
+    /* Kế thừa màu từ phần tử cha hoặc thiết lập màu cụ thể */
+    background: none;
+    /* Loại bỏ nền */
+    border: none;
+    /* Loại bỏ viền */
+    font-weight: normal;
+    /* Đặt trọng số font bình thường */
+    cursor: pointer;
+    /* Đặt con trỏ chuột thành pointer */
+}
+
+.header-right .icon-link .fa-heart {
+    font-size: 1.5rem;
+    /* Tăng kích thước biểu tượng heart */
+}
+
+.header-right .icon-link .fa-bell {
+    font-size: 1.5rem;
+    /* Tăng kích thước biểu tượng bell */
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.header-right .dropdown {
+    position: relative;
+}
+
+.dropdown i {
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.header-right .dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 0;
+    /* Không bo góc */
+    z-index: 1000;
+    /* Đảm bảo menu nằm trên các phần tử khác */
+    width: 200px;
+    /* Kích thước menu dropdown */
+}
+
+.header-right .dropdown:hover .dropdown-menu,
+.header-right .dropdown-menu:hover {
+    display: block;
+}
+
+/* Các liên kết danh mục và sell đều có màu chữ đen */
+.category-link,
+.user-name {
+    color: #000;
+    /* Đặt màu chữ thành đen */
+    font-weight: 500;
+    text-decoration: none;
+    /* Không gạch chân các liên kết */
+    cursor: pointer;
+}
+
+.user-name i {
+    font-size: 25px;
+}
+
+.category-link:hover {
+    text-decoration: underline;
+    /* Gạch chân khi hover */
+}
+
+/* Menu dropdown chính */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    /* Đặt menu ngay dưới phần tử cha */
+    left: -300%;
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 0;
+    /* Không bo góc */
+    z-index: 1000;
+    /* Đảm bảo menu nằm trên các phần tử khác */
+    min-width: 100px;
+    /* Đặt chiều rộng tối thiểu cho menu */
+    padding: 10px 0;
+    /* Padding cho menu */
+}
+
+/* Hiển thị menu khi hover vào dropdown */
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+/* Các liên kết trong menu dropdown */
+.dropdown-menu a {
+    display: block;
+    padding: 10px 20px;
+    /* Padding cho các liên kết */
+    color: #000;
+    /* Màu chữ mặc định */
+    text-decoration: none;
+    /* Loại bỏ gạch chân */
+    font-weight: 500;
+    /* Trọng số font */
+    cursor: pointer;
+}
+
+.dropdown-menu div {
+    display: block;
+    padding: 10px 20px;
+    /* Padding cho các liên kết */
+    color: #3d3a3a;
+    font-size: 10px;
+}
+
+/* Thay đổi màu chữ khi hover */
+.dropdown-menu a:hover {
+    color: #007bff;
+    /* Màu xanh khi hover */
+    background-color: #f8f9fa;
+    /* Màu nền khi hover (có thể thay đổi) */
+}
+
+/* Đảm bảo khoảng cách giữa các liên kết trong menu dropdown */
+.dropdown-menu a+a {
+    margin-top: -1px;
+    /* Loại bỏ khoảng cách giữa các liên kết */
+}
