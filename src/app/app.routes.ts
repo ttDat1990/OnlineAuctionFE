@@ -5,7 +5,7 @@ import { UserLayoutComponent } from './user/layout/layout.component';
 import { HomeComponent } from './user/home/home.component';
 import { AdminLayoutComponent } from './admin/layout/layout.component';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
-import { ItemsComponent } from './user/items/items.component';
+import { AddItemsComponent } from './user/items/add.component';
 import { AdminItemsComponent } from './admin/items/items.component';
 
 export const routes: Routes = [
@@ -30,8 +30,8 @@ export const routes: Routes = [
         component: HomeComponent,
       },
       {
-        path: 'items',
-        component: ItemsComponent,
+        path: 'add-item',
+        component: AddItemsComponent,
       },
     ],
   },

@@ -1,0 +1,54 @@
+<div class="container">
+    <h2>Add New Item</h2>
+    <form [formGroup]="itemForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" id="title" formControlName="itemTitle" class="form-control" />
+      </div>
+  
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" formControlName="itemDescription" class="form-control"></textarea>
+      </div>
+  
+      <div class="form-group">
+        <label for="minBid">Minimum Bid</label>
+        <input type="number" id="minBid" formControlName="minimumBid" class="form-control" />
+      </div>
+  
+      <div class="form-group">
+        <label for="bidIncrement">Bid Increment</label>
+        <input type="number" id="bidIncrement" formControlName="bidIncrement" class="form-control" />
+      </div>
+  
+      <div class="form-group">
+        <label for="bidStartDate">Bid Start Date</label>
+        <input type="datetime-local" id="bidStartDate" formControlName="bidStartDate" class="form-control" />
+      </div>
+  
+      <div class="form-group">
+        <label for="bidEndDate">Bid End Date</label>
+        <input type="datetime-local" id="bidEndDate" formControlName="bidEndDate" class="form-control" />
+      </div>
+  
+      <div class="form-group">
+        <label for="category">Category</label>
+        <select id="category" formControlName="categoryId" class="form-control">
+          <option *ngFor="let category of categories" [value]="category.categoryId">{{ category.categoryName }}</option>
+        </select>
+      </div>
+  
+      <div class="form-group">
+        <label for="images">Upload Images</label>
+        <input type="file" id="images" (change)="onImageSelect($event)" multiple />
+      </div>
+  
+      <div class="form-group">
+        <label for="documents">Upload Documents</label>
+        <input type="file" id="documents" (change)="onDocumentSelect($event)" multiple />
+      </div>
+  
+      <button type="submit" class="btn btn-primary" [disabled]="itemForm.invalid">Submit</button>
+    </form>
+  </div>
+  

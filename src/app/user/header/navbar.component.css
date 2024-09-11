@@ -196,7 +196,7 @@
     position: absolute;
     top: 100%;
     /* Đặt menu ngay dưới phần tử cha */
-    left: -300%;
+    left: -120%;
     background-color: #ffffff;
     border: 1px solid #dee2e6;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
