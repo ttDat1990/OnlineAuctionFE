@@ -7,6 +7,7 @@ import { NavbarComponent } from '../header/navbar.component';
   standalone: true,
   imports: [FormsModule, RouterLink, RouterOutlet, NavbarComponent],
   templateUrl: './layout.component.html',
+  styleUrl: './layout.component.css',
 })
 export class UserLayoutComponent {
   user: any = JSON.parse(localStorage.getItem('user'));

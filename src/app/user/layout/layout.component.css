@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Basis+Grotesque:wght@400;500;600&display=swap');
+
+.containerr {
+  width: 100%;
+  /* Đảm bảo chiếm toàn bộ chiều rộng màn hình */
+  max-width: 1300px;
+  /* Đặt chiều rộng cố định cho container */
+  margin: 0 auto;
+  /* Căn giữa container, hai bên có khoảng trống thay đổi */
+  padding: 0 15px;
+  /* Đảm bảo có một ít khoảng cách giữa container và cạnh màn hình */
+  box-sizing: border-box;
+  /* Tính cả padding và border vào tổng kích thước */
+  font-family: 'Basis Grotesque', sans-serif;
+}

@@ -14,11 +14,11 @@
     <div class="header-middle">
         <!-- Search Bar -->
         <div class="search-bar">
-            <button type="button" class="btn-search">
+            <button type="button" class="btn-search" (click)="onSearch()">
                 <i class="fas fa-search"></i>
             </button>
-            <input type="search" class="form-control" placeholder="Search for brand, model, artist...">
-
+            <input type="search" class="form-control" [(ngModel)]="searchQuery"
+                placeholder="Search for brand, model, artist...">
         </div>
     </div>
 

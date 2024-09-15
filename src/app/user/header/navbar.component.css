@@ -7,10 +7,11 @@
     align-items: center;
     font-size: 15px;
     font-weight: 500;
-    margin-left: 100px;
-    /* Khoảng cách từ trái */
-    margin-right: 100px;
-    /* Khoảng cách từ phải */
+    width: 100%;
+    /* Đảm bảo chiếm toàn bộ chiều rộng màn hình */
+    max-width: 1300px;
+    /* Đặt chiều rộng cố định cho container */
+    margin: 0 auto;
     justify-content: space-between;
     font-family: 'Basis Grotesque', sans-serif;
     /* Áp dụng font */

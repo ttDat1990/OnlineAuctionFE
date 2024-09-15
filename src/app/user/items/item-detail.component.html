@@ -1,0 +1,88 @@
+<div class="container">
+    <div class="item-info" *ngIf="item">
+        <!-- Item Title -->
+        <h1>{{ item.itemTitle }}</h1>
+
+        <!-- Item Seller -->
+        <p>{{ item.sellerUsername }}</p>
+
+        <!-- Item Description -->
+        <p>{{ item.itemDescription }}</p>
+
+        <!-- Images Section -->
+        <div class="images-section">
+            <h3>Images</h3>
+            <div class="image-slider">
+                <button (click)="prevImage()">&#10094;</button>
+                <img [src]="currentImage" class="item-image" alt="Item Image">
+                <button (click)="nextImage()">&#10095;</button>
+            </div>
+        </div>
+
+        <!-- Documents Section -->
+        <div class="documents-section">
+            <h3>Documents</h3>
+            <ul>
+                <li *ngFor="let document of item.documents">
+                    <a [href]="document" target="_blank"><i class="fas fa-file-alt"></i> <!-- Document icon -->
+                        {{ document | slice: -10 }} <!-- Display a part of the document name --></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="bid-card" *ngIf="item">
+
+        <!-- Current or Starting Bid -->
+        <div *ngIf="item.bidStatus === 'A'">
+            <h3>{{ item.currentBid > item.minimumBid ? 'Current Bid' : 'Starting Bid' }}</h3>
+            <p>Close in: {{ formatCountdown(item.bidEndDate) }}</p>
+            <p>Current Bid: {{ item.currentBid | currency }}</p>
+            <p>Bid Increment: {{ item.bidIncrement | currency }}</p>
+
+            <!-- Input for new bid -->
+            <input type="number" [(ngModel)]="newBidAmount" placeholder="Enter your bid" />
+            <button (click)="submitBid()">Submit Bid</button>
+
+            <!-- List of Bidders -->
+            <h4>Bidders</h4>
+            <ul>
+                <li *ngFor="let bid of bids">
+                    {{ bid.bidderUsername }} - {{ bid.bidAmount | currency }} ({{ bid.bidDate | date:'short' }})
+                </li>
+            </ul>
+        </div>
+
+        <!-- Upcoming Bid -->
+        <div *ngIf="item.bidStatus === 'I'">
+            <h3>Upcoming Bid</h3>
+            <p>Start in: {{ formatCountdown(item.bidStartDate) }}</p>
+            <p>Minimum Bid: {{ item.minimumBid | currency }}</p>
+            <p>Bid Increment: {{ item.bidIncrement | currency }}</p>
+            <p>Bid Start Date: {{ item.bidStartDate | date:'short' }}</p>
+            <p>Bid End Date: {{ item.bidEndDate | date:'short' }}</p>
+        </div>
+
+        <!-- Bidding Closed -->
+        <div *ngIf="item.bidStatus === 'E'">
+            <h3>Bidding Closed</h3>
+            <p>Final Bid: {{ item.currentBid | currency }}</p>
+
+            <!-- Check if there are any bidders -->
+            <div *ngIf="bids && bids.length > 0">
+                <p>Winner: {{ winner.bidderUsername }}</p>
+
+                <!-- List of Bidders -->
+                <h4>Bidders</h4>
+                <ul>
+                    <li *ngFor="let bid of bids">
+                        {{ bid.bidderUsername }} - {{ bid.bidAmount | currency }} ({{ bid.bidDate | date:'short' }})
+                    </li>
+                </ul>
+            </div>
+            <div *ngIf="bids && bids.length === 0">
+                <p>No bidders</p>
+            </div>
+        </div>
+    </div>
+</div>

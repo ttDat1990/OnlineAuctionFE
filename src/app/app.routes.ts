@@ -7,6 +7,8 @@ import { AdminLayoutComponent } from './admin/layout/layout.component';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { AddItemsComponent } from './user/items/add.component';
 import { AdminItemsComponent } from './admin/items/items.component';
+import { SearchItemsComponent } from './user/items/search-items.component';
+import { ItemDetailComponent } from './user/items/item-detail.component';
 
 export const routes: Routes = [
   {
@@ -32,6 +34,14 @@ export const routes: Routes = [
       {
         path: 'add-item',
         component: AddItemsComponent,
+      },
+      {
+        path: 'search',
+        component: SearchItemsComponent,
+      },
+      {
+        path: 'item-detail/:id',
+        component: ItemDetailComponent,
       },
     ],
   },
