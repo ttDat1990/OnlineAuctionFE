@@ -40,9 +40,11 @@
             <p>Current Bid: {{ item.currentBid | currency }}</p>
             <p>Bid Increment: {{ item.bidIncrement | currency }}</p>
 
-            <!-- Input for new bid -->
-            <input type="number" [(ngModel)]="newBidAmount" placeholder="Enter your bid" />
-            <button (click)="submitBid()">Submit Bid</button>
+            <div *ngIf="user.username !== item.sellerUsername">
+                <!-- Input for new bid -->
+                <input type="number" [(ngModel)]="newBidAmount" placeholder="Enter your bid" />
+                <button (click)="submitBid()">Submit Bid</button>
+            </div>
 
             <!-- List of Bidders -->
             <h4>Bidders</h4>

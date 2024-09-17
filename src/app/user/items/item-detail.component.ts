@@ -20,6 +20,7 @@ export class ItemDetailComponent {
   winner: any = null;
   currentImageIndex: number = 0;
   currentImage: string = '';
+  user: any = JSON.parse(localStorage.getItem('user'));
 
   constructor(
     private itemService: ItemService,
@@ -79,7 +80,7 @@ export class ItemDetailComponent {
     if (this.newBidAmount > 0 && this.item) {
       this.bidService.submitBid(this.item.itemId, this.newBidAmount).subscribe({
         next: () => {
-          this.loadBidHistory(); // Refresh bids after a successful bid
+          window.location.reload();
         },
         error: (err) => {
           console.error('Error submitting bid:', err);
@@ -110,7 +111,9 @@ export class ItemDetailComponent {
 
   formatCountdown(targetDate: string): string {
     const timeLeft = this.getTimeLeft(targetDate);
-    if (timeLeft <= 0) return 'Expired';
+    if (timeLeft <= 0) {
+      window.location.reload();
+    }
 
     const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
     const hours = Math.floor(
@@ -119,7 +122,7 @@ export class ItemDetailComponent {
     const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
-    return `${days ? days + 'd ' : ''}${hours ? hours + 'h ' : ''}${
+    return `${days != 0 ? days + 'd ' : ''}${hours ? hours + 'h ' : ''}${
       minutes ? minutes + 'm ' : ''
     }${seconds ? seconds + 's' : ''}`;
   }

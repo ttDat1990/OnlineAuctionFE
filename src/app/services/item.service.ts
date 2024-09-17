@@ -37,6 +37,12 @@ export class ItemService {
     });
   }
 
+  searchItemsByCateId(categoryId: number): Observable<any> {
+    return this.httpClient.get(`${this.baseUrlService.BASE_URL}items/search`, {
+      params: { categoryId },
+    });
+  }
+
   getItemById(itemId: number): Observable<any> {
     return this.httpClient.get(
       `${this.baseUrlService.BASE_URL}items/${itemId}`

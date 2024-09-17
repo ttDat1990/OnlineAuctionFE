@@ -5,9 +5,15 @@
             <a [routerLink]="['/user/home']" class="logo-a"><i class="fa-solid fa-dragon"></i> Auction</a>
         </div>
 
-        <!-- Categories -->
+        <!-- Categories Dropdown -->
         <div class="categories">
-            <a href="#" class="category-link">Categories</a>
+            <select class="category-select" [(ngModel)]="selectedCategoryId" (change)="onCategoryChange($event)">
+                <option value="">Category</option>
+                <!-- Sử dụng ngFor để lặp qua danh sách categories -->
+                <option *ngFor="let category of categories" [value]="category.categoryId">
+                    {{ category.categoryName }} ({{ category.itemCount }} items)
+                </option>
+            </select>
         </div>
     </div>
 
@@ -32,17 +38,31 @@
         </a>
 
         <!-- Notification (Bell Icon) -->
-        <a href="#" class="icon-link">
-            <i class="fa-regular fa-bell"></i>
-        </a>
+        <div class="dropdown notification-dropdown">
+            <a class="icon-link" (click)="toggleNotificationDropdown($event)">
+                <i class="fa-regular fa-bell"></i>
+                <span class="notification-badge" *ngIf="unreadNotifications > 0">{{ unreadNotifications }}</span>
+            </a>
+            <!-- Dropdown danh sách Notification -->
+            <div *ngIf="showNotifications" class="dropdown-menu notification-menu">
+                <div>YOUR NOTIFICATION</div>
+                <div *ngFor="let notification of notifications" class="notification-item" [routerLink]="['/user/item-detail/{{}}']">
+                    <span>{{ notification.message }}</span>
+                    <span>{{ notification.time | date: 'short' }}</span>
+                </div>
+                <div *ngIf="notifications.length === 0" class="no-notifications">
+                    No new notifications
+                </div>
+            </div>
+        </div>
 
         <!-- User Dropdown -->
         <div class="dropdown">
-            <span class="user-name">
+            <span class="user-name" (click)="toggleProfileDropdown($event)">
                 {{user.username}}
             </span>
-            <i class="fas fa-chevron-down"></i>
-            <div class="dropdown-menu">
+
+            <div class="dropdown-menu" *ngIf="showProfile">
                 <div>ACCOUNT</div>
                 <a (click)="profile()">Profile</a>
                 <a (click)="logout()">Sign Out</a>
