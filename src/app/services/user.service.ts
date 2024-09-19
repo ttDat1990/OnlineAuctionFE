@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { lastValueFrom } from 'rxjs';
+import { lastValueFrom, Observable } from 'rxjs';
 import { BaseUrlSevice } from './baseurl.service';
 
 @Injectable({
@@ -28,9 +28,27 @@ export class UserService {
     );
   }
 
-  async getAccountByUsername(username: string) {
-    return lastValueFrom(
-      this.httpClient.get(this.baseUrlService.BASE_URL + 'users/' + username)
+  getAccountByUsername(username: string): Observable<any> {
+    return this.httpClient.get(
+      `${this.baseUrlService.BASE_URL}users/${username}`
     );
+  }
+
+  createRating(
+    ratedUserId: number,
+    ratedByUserId: number,
+    itemId: number,
+    ratingScore: number,
+    comments: string
+  ): Observable<any> {
+    const rating = {
+      ratedUserId,
+      ratedByUserId,
+      itemId,
+      ratingScore,
+      comments,
+    };
+
+    return this.httpClient.post(`${this.baseUrlService.BASE_URL}ratings`, rating);
   }
 }

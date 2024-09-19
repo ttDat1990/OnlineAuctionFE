@@ -25,4 +25,19 @@ export class NotificationService {
       { headers }
     );
   }
+
+  markNotificationAsRead(itemId: number): Observable<any> {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.error('Token is missing');
+      throw new Error('Token is missing');
+    }
+
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    return this.httpClient.put(
+      `${this.baseUrlService.BASE_URL}notifications/${itemId}/read`,
+      { headers }
+    );
+  }
 }

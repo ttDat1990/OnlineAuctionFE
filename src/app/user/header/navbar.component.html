@@ -46,7 +46,8 @@
             <!-- Dropdown danh sách Notification -->
             <div *ngIf="showNotifications" class="dropdown-menu notification-menu">
                 <div>YOUR NOTIFICATION</div>
-                <div *ngFor="let notification of notifications" class="notification-item" [routerLink]="['/user/item-detail/{{}}']">
+                <div *ngFor="let notification of notifications; let i = index" class="notification-item"
+                    (click)="navigateToDetail(notification)">
                     <span>{{ notification.message }}</span>
                     <span>{{ notification.time | date: 'short' }}</span>
                 </div>

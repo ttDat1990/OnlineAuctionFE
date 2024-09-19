@@ -4,7 +4,10 @@
         <h1>{{ item.itemTitle }}</h1>
 
         <!-- Item Seller -->
-        <p>{{ item.sellerUsername }}</p>
+        <div (click)="goToSellerDetail(seller.username)">
+            {{ item.sellerUsername }}
+            <span *ngIf="seller && seller.ratingScore">({{ seller.ratingScore }} points)</span>
+        </div>
 
         <!-- Item Description -->
         <p>{{ item.itemDescription }}</p>
@@ -36,8 +39,8 @@
         <!-- Current or Starting Bid -->
         <div *ngIf="item.bidStatus === 'A'">
             <h3>{{ item.currentBid > item.minimumBid ? 'Current Bid' : 'Starting Bid' }}</h3>
+            <p style="font-size: 28px;font-weight: bold;">{{ item.currentBid | currency }}</p>
             <p>Close in: {{ formatCountdown(item.bidEndDate) }}</p>
-            <p>Current Bid: {{ item.currentBid | currency }}</p>
             <p>Bid Increment: {{ item.bidIncrement | currency }}</p>
 
             <div *ngIf="user.username !== item.sellerUsername">
@@ -86,5 +89,25 @@
                 <p>No bidders</p>
             </div>
         </div>
+
+        <!-- Hiển thị form đánh giá chỉ cho người chiến thắng -->
+        <div *ngIf="item.bidStatus === 'E' && isWinner && !hasRated">
+            <h2>Rate {{ item.sellerUsername }}</h2>
+            <form [formGroup]="ratingForm" (ngSubmit)="submitRating()">
+                <label for="ratingScore">Rating Score:</label>
+                <input id="ratingScore" formControlName="ratingScore" type="number" min="1" max="5" />
+
+                <label for="comments">Comments:</label>
+                <textarea id="comments" formControlName="comments"></textarea>
+
+                <button type="submit">Submit Rating</button>
+            </form>
+        </div>
+
+        <!-- Hiển thị thông báo nếu đã đánh giá -->
+        <div *ngIf="hasRated">
+            <p>You have already rated this item.</p>
+        </div>
+
     </div>
 </div>

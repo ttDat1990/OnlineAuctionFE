@@ -1,0 +1,32 @@
+<div *ngIf="seller">
+    <h2>Seller Details</h2>
+
+    <!-- Basic Seller Information -->
+    <p><strong>Username:</strong> {{ seller.username }}</p>
+    <p><strong>Email:</strong> {{ seller.email }}</p>
+    <p><strong>Role:</strong> {{ seller.role }}</p>
+    <p><strong>Rating Score:</strong> {{ seller.ratingScore }}</p>
+
+    <!-- Ratings Given by Other Users -->
+    <h3>Ratings</h3>
+    <div *ngIf="seller.ratingRatedUsers.length > 0; else noRatings">
+        <ul>
+            <li *ngFor="let rating of seller.ratingRatedUsers">
+                <p><strong>Rated by Username:</strong> {{ rating.ratedByUserUsername }}</p>
+                <p><strong>Item:</strong><button (click)="goToItemDetail(rating.itemId)">See Item</button> </p>
+                <p><strong>Rating Score:</strong> {{ rating.ratingScore }}</p>
+                <p><strong>Comments:</strong> {{ rating.comments }}</p>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Show this message if no ratings are available -->
+    <ng-template #noRatings>
+        <p>No ratings available for this seller.</p>
+    </ng-template>
+</div>
+
+<!-- Error or Loading States -->
+<div *ngIf="!seller">
+    <p>Loading seller details...</p>
+</div>

@@ -36,11 +36,22 @@ export class NavbarComponent {
   loadNotifications() {
     this.notificationService.getUserNotifications(this.userId).subscribe({
       next: (data: any[]) => {
-        this.notifications = data;
+        this.notifications = data.filter((n) => !n.isRead);
         this.unreadNotifications = data.filter((n) => !n.isRead).length;
       },
       error: (error) => {
         console.error('Error loading notifications', error);
+      },
+    });
+  }
+
+  markNotificationsAsRead(notificationId: number) {
+    this.notificationService.markNotificationAsRead(notificationId).subscribe({
+      next: (data) => {
+        console.log('Notification marked as read');
+      },
+      error: (error) => {
+        console.error('Error marking notification as read', error);
       },
     });
   }
@@ -112,6 +123,29 @@ export class NavbarComponent {
       this.router.navigate(['/user/search'], {
         queryParams: { categoryId: categoryId, categoryName: categoryName },
       });
+    }
+  }
+
+  findIdFromString(text: string): number | null {
+    const regex = /\(id:(\d+)\)/;
+    const match = text.match(regex);
+    if (match && match[1]) {
+      return parseInt(match[1], 10);
+    }
+
+    return null;
+  }
+
+  navigateToDetail(notification: any) {
+    const notificationId = notification.notificationId;
+    const itemId = this.findIdFromString(notification.message);
+
+    if (notificationId !== null && itemId !== null) {
+      this.markNotificationsAsRead(notificationId); // Mark notification as read
+      setTimeout(() => {
+        this.router.navigate(['/user/item-detail', itemId]);
+        this.ngOnInit();
+      }, 100); // 100ms delay to ensure async operation completes
     }
   }
 }

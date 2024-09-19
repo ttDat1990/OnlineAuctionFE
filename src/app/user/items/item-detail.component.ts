@@ -3,12 +3,19 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ItemService } from '../../services/item.service';
 import { BidService } from '../../services/bid.service';
 import { forkJoin } from 'rxjs';
-import { FormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { UserService } from '../../services/user.service';
 
 @Component({
   standalone: true,
-  imports: [FormsModule, RouterLink, CommonModule],
+  imports: [FormsModule, RouterLink, CommonModule, ReactiveFormsModule],
   templateUrl: './item-detail.component.html',
   styleUrls: ['./item-detail.component.css'],
 })
@@ -20,14 +27,25 @@ export class ItemDetailComponent {
   winner: any = null;
   currentImageIndex: number = 0;
   currentImage: string = '';
-  user: any = JSON.parse(localStorage.getItem('user'));
+  user: any = JSON.parse(localStorage.getItem('user') || '{}');
+  seller: any;
+  isWinner: boolean = false;
+  hasRated: boolean = false;
+  ratingForm: FormGroup;
 
   constructor(
     private itemService: ItemService,
     private bidService: BidService,
+    private userService: UserService,
     private route: ActivatedRoute,
-    private router: Router
-  ) {}
+    private router: Router,
+    private fb: FormBuilder
+  ) {
+    this.ratingForm = this.fb.group({
+      ratingScore: [5, [Validators.required, Validators.min(1), Validators.max(5)]],
+      comments: ['']
+    });
+  }
 
   ngOnInit(): void {
     this.itemId = Number(this.route.snapshot.paramMap.get('id'));
@@ -40,7 +58,7 @@ export class ItemDetailComponent {
       next: ([item, bids]) => {
         this.item = item;
         this.bids = bids;
-
+        this.loadSellerInfo(item.sellerUsername);
         if (this.item && this.item.images.length > 0) {
           this.currentImage = this.item.images[this.currentImageIndex];
         }
@@ -49,6 +67,7 @@ export class ItemDetailComponent {
           this.winner = this.bids.reduce((prev, current) =>
             prev.bidAmount > current.bidAmount ? prev : current
           );
+          this.isWinner = this.user.userId === this.winner.bidderId;
         } else if (this.item.bidStatus === 'E' && this.bids.length === 0) {
           this.winner = 'No bidder';
         }
@@ -57,6 +76,36 @@ export class ItemDetailComponent {
         console.error('Error fetching data:', err);
       },
     });
+  }
+
+  submitRating(): void {
+    if (this.item && this.winner) {
+      const ratedUserId = this.item.sellerId; // Người bán
+      const ratedByUserId = this.winner.bidderId; // Người chiến thắng
+
+      const ratingScore = this.ratingForm.get('ratingScore')?.value; // Điểm đánh giá từ form
+      const comments = this.ratingForm.get('comments')?.value; // Bình luận từ form
+
+      this.userService
+        .createRating(
+          ratedUserId,
+          ratedByUserId,
+          this.item.itemId,
+          ratingScore,
+          comments
+        )
+        .subscribe({
+          next: () => {
+            console.log('Rating submitted successfully.');
+            this.hasRated = true; // Đánh dấu người dùng đã đánh giá
+          },
+          error: (err) => {
+            console.error('Error submitting rating:', err);
+          },
+        });
+    } else {
+      console.error('Item or winner information is missing.');
+    }
   }
 
   prevImage() {
@@ -109,10 +158,21 @@ export class ItemDetailComponent {
     });
   }
 
+  loadSellerInfo(username: string) {
+    this.userService.getAccountByUsername(username).subscribe({
+      next: (response) => {
+        this.seller = response;
+      },
+      error: (err) => {
+        console.error('Error loading seller info:', err);
+      },
+    });
+  }
+
   formatCountdown(targetDate: string): string {
     const timeLeft = this.getTimeLeft(targetDate);
     if (timeLeft <= 0) {
-      window.location.reload();
+      return 'Please reload for update Bid Status!';
     }
 
     const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
@@ -129,5 +189,9 @@ export class ItemDetailComponent {
 
   getTimeLeft(targetDate: string): number {
     return new Date(targetDate).getTime() - new Date().getTime();
+  }
+
+  goToSellerDetail(sellerUsername: string) {
+    this.router.navigate(['/user/seller-detail', sellerUsername]);
   }
 }
