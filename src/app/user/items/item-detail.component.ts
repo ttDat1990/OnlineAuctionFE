@@ -3,19 +3,13 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ItemService } from '../../services/item.service';
 import { BidService } from '../../services/bid.service';
 import { forkJoin } from 'rxjs';
-import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../services/user.service';
 
 @Component({
   standalone: true,
-  imports: [FormsModule, RouterLink, CommonModule, ReactiveFormsModule],
+  imports: [FormsModule, RouterLink, CommonModule],
   templateUrl: './item-detail.component.html',
   styleUrls: ['./item-detail.component.css'],
 })
@@ -27,30 +21,24 @@ export class ItemDetailComponent {
   winner: any = null;
   currentImageIndex: number = 0;
   currentImage: string = '';
-  user: any = JSON.parse(localStorage.getItem('user') || '{}');
+  user: any = JSON.parse(localStorage.getItem('user'));
   seller: any;
-  isWinner: boolean = false;
-  hasRated: boolean = false;
-  ratingForm: FormGroup;
+  ratingScore: number = 5; // Default score
+  comments: string = '';
+  showExistingRating: boolean = false;
+  showRatingForm: boolean = false;
 
   constructor(
     private itemService: ItemService,
     private bidService: BidService,
     private userService: UserService,
     private route: ActivatedRoute,
-    private router: Router,
-    private fb: FormBuilder
-  ) {
-    this.ratingForm = this.fb.group({
-      ratingScore: [5, [Validators.required, Validators.min(1), Validators.max(5)]],
-      comments: ['']
-    });
-  }
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.itemId = Number(this.route.snapshot.paramMap.get('id'));
 
-    // Call both APIs (item details and bid history)
     forkJoin([
       this.itemService.getItemById(this.itemId), // API to get item details
       this.bidService.getBidHistory(this.itemId), // API to get bid history
@@ -62,12 +50,11 @@ export class ItemDetailComponent {
         if (this.item && this.item.images.length > 0) {
           this.currentImage = this.item.images[this.currentImageIndex];
         }
-        // Process the winner logic only if bidding has ended and there are bids
         if (this.item.bidStatus === 'E' && this.bids.length > 0) {
           this.winner = this.bids.reduce((prev, current) =>
             prev.bidAmount > current.bidAmount ? prev : current
           );
-          this.isWinner = this.user.userId === this.winner.bidderId;
+          this.checkUserRating();
         } else if (this.item.bidStatus === 'E' && this.bids.length === 0) {
           this.winner = 'No bidder';
         }
@@ -76,36 +63,6 @@ export class ItemDetailComponent {
         console.error('Error fetching data:', err);
       },
     });
-  }
-
-  submitRating(): void {
-    if (this.item && this.winner) {
-      const ratedUserId = this.item.sellerId; // Người bán
-      const ratedByUserId = this.winner.bidderId; // Người chiến thắng
-
-      const ratingScore = this.ratingForm.get('ratingScore')?.value; // Điểm đánh giá từ form
-      const comments = this.ratingForm.get('comments')?.value; // Bình luận từ form
-
-      this.userService
-        .createRating(
-          ratedUserId,
-          ratedByUserId,
-          this.item.itemId,
-          ratingScore,
-          comments
-        )
-        .subscribe({
-          next: () => {
-            console.log('Rating submitted successfully.');
-            this.hasRated = true; // Đánh dấu người dùng đã đánh giá
-          },
-          error: (err) => {
-            console.error('Error submitting rating:', err);
-          },
-        });
-    } else {
-      console.error('Item or winner information is missing.');
-    }
   }
 
   prevImage() {
@@ -138,24 +95,6 @@ export class ItemDetailComponent {
     } else {
       console.error('Invalid bid amount or item not available');
     }
-  }
-
-  loadBidHistory(): void {
-    this.bidService.getBidHistory(this.itemId).subscribe({
-      next: (response) => {
-        this.bids = response;
-
-        // Update the winner after reloading bids if bidding has ended
-        if (this.item.bidStatus === 'E' && this.bids.length > 0) {
-          this.winner = this.bids.reduce((prev, current) =>
-            prev.bidAmount > current.bidAmount ? prev : current
-          );
-        }
-      },
-      error: (err) => {
-        console.error('Error loading bid history:', err);
-      },
-    });
   }
 
   loadSellerInfo(username: string) {
@@ -193,5 +132,67 @@ export class ItemDetailComponent {
 
   goToSellerDetail(sellerUsername: string) {
     this.router.navigate(['/user/seller-detail', sellerUsername]);
+  }
+
+  submitRating(): void {
+    if (this.item && this.winner && this.ratingScore > 0) {
+      const ratedUserId = this.item.sellerId;
+      const ratedByUserId = this.winner.bidderId;
+
+      this.userService
+        .createRating(
+          ratedUserId,
+          ratedByUserId,
+          this.item.itemId,
+          this.ratingScore,
+          this.comments
+        )
+        .subscribe({
+          next: () => {
+            console.log('Rating submitted successfully.');
+            this.checkUserRating();
+          },
+          error: (err) => {
+            console.error('Error submitting rating:', err);
+          },
+        });
+    } else {
+      console.error('Invalid rating score or missing item/winner info.');
+    }
+  }
+
+  checkUserRating(): void {
+    this.userService.getRatingByItemId(this.itemId).subscribe({
+      next: (ratings) => {
+        // Tìm rating của người đánh giá (winner)
+        const foundRating = ratings.find(
+          (r: any) => r.ratedByUserId === this.winner.bidderId
+        );
+
+        // Kiểm tra xem người dùng đang đăng nhập có phải là winner không
+        const isWinner = this.user.username === this.winner.bidderUsername;
+
+        if (foundRating) {
+          // Nếu tìm thấy rating
+          this.showExistingRating = true;
+          this.showRatingForm = false;
+          this.ratingScore = foundRating.ratingScore;
+          this.comments = foundRating.comments;
+        } else if (isWinner) {
+          // Nếu không tìm thấy rating và người dùng là winner, hiển thị form
+          this.showExistingRating = false;
+          this.showRatingForm = true;
+        } else {
+          // Nếu không phải winner, không hiển thị form
+          this.showExistingRating = false;
+          this.showRatingForm = false;
+        }
+      },
+      error: (err) => {
+        console.error('Error checking rating:', err);
+        this.showExistingRating = false;
+        this.showRatingForm = false;
+      },
+    });
   }
 }

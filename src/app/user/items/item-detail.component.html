@@ -90,24 +90,34 @@
             </div>
         </div>
 
-        <!-- Hiển thị form đánh giá chỉ cho người chiến thắng -->
-        <div *ngIf="item.bidStatus === 'E' && isWinner && !hasRated">
-            <h2>Rate {{ item.sellerUsername }}</h2>
-            <form [formGroup]="ratingForm" (ngSubmit)="submitRating()">
-                <label for="ratingScore">Rating Score:</label>
-                <input id="ratingScore" formControlName="ratingScore" type="number" min="1" max="5" />
-
-                <label for="comments">Comments:</label>
-                <textarea id="comments" formControlName="comments"></textarea>
-
-                <button type="submit">Submit Rating</button>
-            </form>
+        <div *ngIf="showExistingRating; else ratingForm">
+            <h3>Rating</h3>
+            <p><strong>Score:</strong> {{ ratingScore }}</p>
+            <p><strong>Comments:</strong> {{ comments }}</p>
         </div>
 
-        <!-- Hiển thị thông báo nếu đã đánh giá -->
-        <div *ngIf="hasRated">
-            <p>You have already rated this item.</p>
-        </div>
+        <ng-template #ratingForm>
+            <div *ngIf="showRatingForm">
+                <h3>Please rate the seller</h3>
+                <form (ngSubmit)="submitRating()">
+                    <label for="ratingScore">Rating Score:</label>
+                    <select [(ngModel)]="ratingScore" name="ratingScore" required>
+                        <option [value]="1">1</option>
+                        <option [value]="2">2</option>
+                        <option [value]="3">3</option>
+                        <option [value]="4">4</option>
+                        <option [value]="5">5</option>
+                    </select>
+
+                    <label for="comments">Comments:</label>
+                    <textarea [(ngModel)]="comments" name="comments" placeholder="Leave your feedback here"
+                        required></textarea>
+
+                    <button type="submit">Submit Rating</button>
+                </form>
+            </div>
+        </ng-template>
+
 
     </div>
 </div>

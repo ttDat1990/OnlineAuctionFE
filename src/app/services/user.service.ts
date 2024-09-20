@@ -49,6 +49,15 @@ export class UserService {
       comments,
     };
 
-    return this.httpClient.post(`${this.baseUrlService.BASE_URL}ratings`, rating);
+    return this.httpClient.post(
+      `${this.baseUrlService.BASE_URL}ratings`,
+      rating
+    );
+  }
+
+  getRatingByItemId(itemId: number): Observable<any> {
+    return this.httpClient.get(
+      `${this.baseUrlService.BASE_URL}ratings/item/${itemId}`
+    );
   }
 }
