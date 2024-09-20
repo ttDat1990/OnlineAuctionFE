@@ -1,4 +1,4 @@
-<div class="hold-transition login-page">
+<!-- <div class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
             <b>Register</b>
@@ -74,4 +74,113 @@
             </form>
         </div>
     </div>
+</div> -->
+
+
+
+<div class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            <b>Online</b>Auction
+        </div>
+        <!-- /.login-logo -->
+        <div class="card">
+            <div class="card-body login-card-body">
+                <p class="login-box-msg">Register to start your Bid</p>
+
+                <form [formGroup]="registerForm" (ngSubmit)="register()">
+                    <div class="input-group mb-1">
+                        <input type="text" formControlName="username" class="form-control" placeholder="Username">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3"
+                        [style.visibility]="registerForm.get('username')?.invalid && registerForm.get('username')?.touched ? 'visible' : 'hidden'"
+                        style="color: red;">
+                        <ng-container *ngIf="registerForm.get('username')?.errors?.['required']">
+                            Username is required.
+                        </ng-container>
+                        <ng-container *ngIf="registerForm.get('username')?.errors?.['minlength']">
+                            Username must be at least 6 characters long.
+                        </ng-container>
+                    </div>
+
+                    <div class="input-group mb-1 mt-2">
+                        <input type="password" formControlName="password" class="form-control" placeholder="Password">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3"
+                        [style.visibility]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched ? 'visible' : 'hidden'"
+                        style="color: red;">
+                        <ng-container *ngIf="registerForm.get('password')?.errors?.['required']">
+                            Password is required.
+                        </ng-container>
+                        <ng-container *ngIf="registerForm.get('password')?.errors?.['minlength']">
+                            Password must be at least 6 characters long.
+                        </ng-container>
+                        <ng-container *ngIf="registerForm.get('password')?.errors?.['pattern']">
+                            Password must contain both letters and numbers.
+                        </ng-container>
+                    </div>
+
+                    <div class="input-group mb-1 mt-2">
+                        <input type="text" formControlName="email" class="form-control" placeholder="Email">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3"
+                        [style.visibility]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched ? 'visible' : 'hidden'"
+                        style="color: red;">
+                        <ng-container *ngIf="registerForm.get('email')?.errors?.['required']">
+                            Email is required.
+                        </ng-container>
+                        <ng-container *ngIf="registerForm.get('email')?.errors?.['email']">
+                            Invalid email format.
+                        </ng-container>
+                    </div>
+
+                    <div class="row">
+                        <!-- /.col -->
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-primary btn-block"
+                                [disabled]="registerForm.invalid">Register</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <div style="min-height: 24px;">
+                        <span [style.visibility]="errorMessage != null ? 'visible' : 'hidden'" style="color: red;">
+                            {{ errorMessage }}
+                        </span>
+                    </div>
+
+                </form>
+                <p class="mb-0">
+                    <a [routerLink]="['/login']" class="text-center">Already have account?</a>
+                </p>
+            </div>
+
+        </div>
+        <!-- /.login-card-body -->
+    </div>
+
+    <!-- /.login-box -->
+
+    <!-- jQuery -->
+    <script src="../../plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../../dist/js/adminlte.min.js"></script>
 </div>

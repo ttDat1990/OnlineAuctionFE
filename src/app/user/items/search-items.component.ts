@@ -42,12 +42,12 @@ export class SearchItemsComponent {
         if (item.BidStatus === 'A') {
           const timeLeft = this.getTimeLeft(item.BidEndDate);
           if (timeLeft <= 0) {
-            window.location.reload();
+            item.BidStatus = 'E';
           }
         } else if (item.BidStatus === 'I') {
           const timeLeft = this.getTimeLeft(item.BidStartDate);
           if (timeLeft <= 0) {
-            window.location.reload();
+            item.BidStatus = 'A';
           }
         }
       });
@@ -96,7 +96,8 @@ export class SearchItemsComponent {
     const timeLeft = this.getTimeLeft(targetDate);
 
     if (timeLeft <= 0) {
-      return '';
+      window.location.reload();
+      return 'Reload for updating Status';
     }
 
     const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));

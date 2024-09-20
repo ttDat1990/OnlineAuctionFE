@@ -111,6 +111,7 @@ export class ItemDetailComponent {
   formatCountdown(targetDate: string): string {
     const timeLeft = this.getTimeLeft(targetDate);
     if (timeLeft <= 0) {
+      window.location.reload();
       return 'Please reload for update Bid Status!';
     }
 
