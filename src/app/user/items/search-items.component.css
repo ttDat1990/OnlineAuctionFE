@@ -1,11 +1,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Basis+Grotesque:wght@400;500;600&display=swap');
 
 .query {
-    font-family: 'Basis Grotesque', sans-serif;
-    font-weight: 700;
-    font-size: 40px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    margin-top: 50px;
+    font-weight: 500;
+    font-size: 25px;
     line-height: 1;
-    margin: 45px 0;
+}
+
+.query1 {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    margin-top: 50px;
+    font-size: 20px;
+}
+
+.item-list1 {
+    background-color: white;
+    width: 100%;
+    padding: 50px 0;
 }
 
 .item-list {
@@ -13,7 +29,9 @@
     flex-wrap: wrap;
     justify-content: flex-start;
     gap: 20px;
-    /* Căn đều các card */
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .card {
@@ -54,6 +72,14 @@
     font-weight: 600;
     margin-top: 10px;
     margin-bottom: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.item-title:hover {
+    cursor: pointer;
+    color: rgba(29, 74, 255, 0.74);
 }
 
 .itemss {

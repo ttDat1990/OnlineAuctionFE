@@ -2,17 +2,30 @@
 @import url('https://fonts.googleapis.com/css2?family=Basis+Grotesque:wght@400;500;600&display=swap');
 
 /* Đảm bảo phần tử header có khoảng cách cố định từ trái và phải */
-.header-container {
+.container1 {
     display: flex;
     align-items: center;
     justify-content: space-between;
     font-size: 15px;
     font-weight: 500;
     width: 100%;
-    max-width: 1300px;
+    max-width: 1200px;
     margin: 0 auto;
-    font-family: 'Basis Grotesque', sans-serif;
-    padding: 0 20px;
+    font-family: basisGrotesqueMono, monospace;
+    padding: 15px 0;
+}
+
+.container2 {
+    width: 100%;
+    position: sticky;
+    top: 0;
+    /* Vị trí bám dính khi cuộn đến, top = 0 nghĩa là sát trên cùng */
+    z-index: 1000;
+    /* Đảm bảo navbar hiển thị trên các phần tử khác */
+    background-color: #fff;
+    /* Bạn có thể thay đổi màu nền nếu cần */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Hiệu ứng bóng đổ tùy chọn */
 }
 
 .logo-a {
@@ -27,7 +40,7 @@
     display: flex;
     align-items: center;
     gap: 25px;
-    flex: 6;
+    flex: 5;
 }
 
 .header-right {
@@ -35,14 +48,14 @@
     align-items: center;
     justify-content: space-between;
     flex: 5;
-    margin: 0 30px;
 }
 
 /* Đảm bảo phần giữa (search bar) có chiều rộng còn lại */
 .header-middle {
-    flex: 10;
+    flex: 9;
     display: flex;
     justify-content: center;
+    margin: 0 20px;
 }
 
 .search-bar {
@@ -161,7 +174,12 @@
     color: #000;
     cursor: pointer;
     appearance: none;
-    width: 80%;
+    width: 100%;
+    text-align: center;
+}
+
+.categories select:hover {
+    text-decoration-line: underline;
 }
 
 /* Notification badge and menu */

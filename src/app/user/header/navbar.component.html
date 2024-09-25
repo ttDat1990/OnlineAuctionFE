@@ -1,73 +1,76 @@
-<header class="header-container">
-    <div class="header-left">
-        <!-- Logo -->
-        <div class="logo">
-            <a [routerLink]="['/user/home']" class="logo-a"><i class="fa-solid fa-dragon"></i> Auction</a>
+<div class="container2">
+    <header class="container1">
+        <div class="header-left">
+            <!-- Logo -->
+            <div class="logo">
+                <a [routerLink]="['/user/home']" class="logo-a">Auction</a>
+            </div>
+
+            <!-- Categories Dropdown -->
+            <div class="categories">
+                <select class="category-select" [(ngModel)]="selectedCategoryId" (change)="onCategoryChange($event)">
+                    <option value="">Category</option>
+                    <!-- Sử dụng ngFor để lặp qua danh sách categories -->
+                    <option *ngFor="let category of categories" [value]="category.categoryId">
+                        {{ category.categoryName }} ({{ category.itemCount }} items)
+                    </option>
+                </select>
+            </div>
+
         </div>
 
-        <!-- Categories Dropdown -->
-        <div class="categories">
-            <select class="category-select" [(ngModel)]="selectedCategoryId" (change)="onCategoryChange($event)">
-                <option value="">Category</option>
-                <!-- Sử dụng ngFor để lặp qua danh sách categories -->
-                <option *ngFor="let category of categories" [value]="category.categoryId">
-                    {{ category.categoryName }} ({{ category.itemCount }} items)
-                </option>
-            </select>
+        <div class="header-middle">
+            <!-- Search Bar -->
+            <div class="search-bar">
+                <button type="button" class="btn-search" (click)="onSearch()">
+                    <i class="fas fa-search"></i>
+                </button>
+                <input type="search" class="form-control" [(ngModel)]="searchQuery"
+                    placeholder="Search for brand, model, artist...">
+            </div>
         </div>
-    </div>
 
-    <div class="header-middle">
-        <!-- Search Bar -->
-        <div class="search-bar">
-            <button type="button" class="btn-search" (click)="onSearch()">
-                <i class="fas fa-search"></i>
-            </button>
-            <input type="search" class="form-control" [(ngModel)]="searchQuery"
-                placeholder="Search for brand, model, artist...">
-        </div>
-    </div>
+        <div class="header-right">
+            <!-- Sell -->
+            <a [routerLink]="['/user/add-item']" class="category-link">Sell</a>
 
-    <div class="header-right">
-        <!-- Sell -->
-        <a [routerLink]="['/user/add-item']" class="category-link">Sell</a>
-
-        <!-- Favourite (Heart Icon) -->
-        <a href="#" class="icon-link">
-            <i class="fa-regular fa-heart"></i>
-        </a>
-
-        <!-- Notification (Bell Icon) -->
-        <div class="dropdown notification-dropdown">
-            <a class="icon-link" (click)="toggleNotificationDropdown($event)">
-                <i class="fa-regular fa-bell"></i>
-                <span class="notification-badge" *ngIf="unreadNotifications > 0">{{ unreadNotifications }}</span>
+            <!-- Favourite (Heart Icon) -->
+            <a href="#" class="icon-link">
+                <i class="fa-regular fa-heart"></i>
             </a>
-            <!-- Dropdown danh sách Notification -->
-            <div *ngIf="showNotifications" class="dropdown-menu notification-menu">
-                <div>YOUR NOTIFICATION</div>
-                <div *ngFor="let notification of notifications; let i = index" class="notification-item"
-                    (click)="navigateToDetail(notification)">
-                    <span>{{ notification.message }}</span>
-                    <span>{{ notification.time | date: 'short' }}</span>
+
+            <!-- Notification (Bell Icon) -->
+            <div class="dropdown notification-dropdown">
+                <a class="icon-link" (click)="toggleNotificationDropdown($event)">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="notification-badge" *ngIf="unreadNotifications > 0">{{ unreadNotifications }}</span>
+                </a>
+                <!-- Dropdown danh sách Notification -->
+                <div *ngIf="showNotifications" class="dropdown-menu notification-menu">
+                    <div>YOUR NOTIFICATION</div>
+                    <div *ngFor="let notification of notifications; let i = index" class="notification-item"
+                        (click)="navigateToDetail(notification)">
+                        <span>{{ notification.message }}</span>
+                        <span>{{ notification.time | date: 'short' }}</span>
+                    </div>
+                    <div *ngIf="notifications.length === 0" class="no-notifications">
+                        No new notifications
+                    </div>
                 </div>
-                <div *ngIf="notifications.length === 0" class="no-notifications">
-                    No new notifications
+            </div>
+
+            <!-- User Dropdown -->
+            <div class="dropdown">
+                <span class="user-name" (click)="toggleProfileDropdown($event)">
+                    {{user.username}}
+                </span>
+
+                <div class="dropdown-menu" *ngIf="showProfile">
+                    <div>ACCOUNT</div>
+                    <a (click)="profile()">Profile</a>
+                    <a (click)="logout()">Sign Out</a>
                 </div>
             </div>
         </div>
-
-        <!-- User Dropdown -->
-        <div class="dropdown">
-            <span class="user-name" (click)="toggleProfileDropdown($event)">
-                {{user.username}}
-            </span>
-
-            <div class="dropdown-menu" *ngIf="showProfile">
-                <div>ACCOUNT</div>
-                <a (click)="profile()">Profile</a>
-                <a (click)="logout()">Sign Out</a>
-            </div>
-        </div>
-    </div>
-</header>
+    </header>
+</div>

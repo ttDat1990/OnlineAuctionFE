@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Basis+Grotesque:wght@400;500;600&display=swap');
+
+.item-list1 {
+  background-color: white;
+  width: 100%;
+  padding: 50px 0;
+}
+
+.titl {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-bottom: 15px;
+  font-weight: 550;
+  font-size: 15px;
+  line-height: 1.2352941176;
+  letter-spacing: 2px;
+}
+
+.item-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+
+.item-tit p {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.2;
+  color: #919397;
+  letter-spacing: 2px;
+  margin-bottom: 2px;
+}
+
+.item-tit div {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1.2631578947;
+}
+
+.card {
+  width: 20%;
+  margin-bottom: 20px;
+  border-radius: unset;
+  box-shadow: none;
+  border: unset;
+  cursor: pointer;
+}
+
+.card-body {
+  padding: 0;
+}
+
+.image-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  gap: 10px;
+  margin-bottom: 10px;
+  background-color: rgb(239, 240, 245);
+  overflow: hidden;
+}
+
+.item-image {
+  width: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease-in-out;
+}
+
+.large-image {
+  grid-column: 1 / span 2;
+  /* Hình lớn chiếm 2 cột */
+  height: 200px;
+  /* Hình lớn */
+}
+
+.medium-image {
+  height: 150px;
+  /* Hình trung bình */
+}
+
+.small-image-info {
+  display: flex;
+  flex-direction: column;
+  /* Đặt hình nhỏ và info theo cột */
+}
+
+.small-image {
+  height: 100px;
+  /* Hình nhỏ */
+  margin-bottom: 10px;
+  /* Khoảng cách giữa hình và info */
+}
+
+.extra-images-info {
+  font-size: 14px;
+  color: #555;
+  height: 40px;
+  /* Đặt chiều cao vừa đủ để hiển thị thông tin */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .card {
+    width: 48%;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    width: 100%;
+  }
+}
+
+.card:hover .item-image {
+  transform: scale(1.05);
+  /* Phóng to 10% khi hover vào card */
+}

@@ -1,0 +1,93 @@
+.item-list1 {
+  background-color: white;
+  width: 100%;
+}
+
+.item-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+p {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.card {
+  width: 20%;
+  margin-bottom: 20px;
+  margin-left: 10px;
+  border-radius: unset;
+  box-shadow: none;
+  border: unset;
+}
+
+.card-body {
+  padding: 0;
+}
+
+.image-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  gap: 10px;
+  margin-bottom: 10px;
+  background-color: burlywood;
+}
+
+.item-image {
+  width: 100%;
+  object-fit: cover;
+}
+
+.large-image {
+  grid-column: 1 / span 2;
+  /* Hình lớn chiếm 2 cột */
+  height: 200px;
+  /* Hình lớn */
+}
+
+.medium-image {
+  height: 150px;
+  /* Hình trung bình */
+}
+
+.small-image-info {
+  display: flex;
+  flex-direction: column;
+  /* Đặt hình nhỏ và info theo cột */
+}
+
+.small-image {
+  height: 100px;
+  /* Hình nhỏ */
+  margin-bottom: 10px;
+  /* Khoảng cách giữa hình và info */
+}
+
+.extra-images-info {
+  font-size: 14px;
+  color: #555;
+  height: 40px;
+  /* Đặt chiều cao vừa đủ để hiển thị thông tin */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .card {
+    width: 48%;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    width: 100%;
+  }
+}

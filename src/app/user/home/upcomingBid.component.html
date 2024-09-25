@@ -1,0 +1,49 @@
+<div class="item-list1">
+    <div class="item-list">
+        <div *ngFor="let item of items" class="card">
+            <div class="card-body">
+                <div class="image-grid">
+                    <!-- Hình ảnh so le -->
+                    <img *ngIf="item.images.length > 0" [src]="item.images[0]" class="item-image large-image" />
+                    <img *ngIf="item.images.length > 1" [src]="item.images[1]" class="item-image medium-image" />
+
+                    <!-- Hình nhỏ và phần thông tin trong cùng một cột -->
+                    <div class="small-image-info">
+                        <img *ngIf="item.images.length > 2" [src]="item.images[2]" class="item-image small-image" />
+                        <div *ngIf="item.images.length > 3" class="extra-images-info">
+                            + {{ item.images.length - 3 }} more
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Condition for Active and Current Bid higher than Minimum Bid -->
+                <div *ngIf="item.bidStatus === 'A' && item.minimumBid &lt; item.currentBid">
+                    <p>{{ item.itemTitle }}</p>
+                    <p>Current Bid: {{ item.currentBid | currency }}</p>
+                    <p>Time left: {{ formatCountdown(item.bidEndDate) }}</p>
+                </div>
+
+                <!-- Condition for Active and Current Bid equals Minimum Bid -->
+                <div *ngIf="item.bidStatus === 'A' && item.minimumBid === item.currentBid">
+                    <p>{{ item.itemTitle }}</p>
+                    <p>Starting Bid</p>
+                    <p>Time left: {{ formatCountdown(item.bidEndDate) }}</p>
+                </div>
+
+                <!-- Condition for Upcoming Bid -->
+                <div *ngIf="item.bidStatus === 'I'">
+                    <p>{{ item.itemTitle }}</p>
+                    <p>Upcoming Bid</p>
+                    <p>Starts in: {{ formatCountdown(item.bidStartDate) }}</p>
+                </div>
+
+                <!-- Condition for Bidding Closed -->
+                <div *ngIf="item.bidStatus === 'E'">
+                    <p>{{ item.itemTitle }}</p>
+                    <p></p>
+                    <p>Bidding closed</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

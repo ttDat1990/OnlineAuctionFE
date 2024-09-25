@@ -1,32 +1,90 @@
-<div *ngIf="seller">
-    <h2>Seller Details</h2>
+<div class="container1">
+    <div class="info-container">
+        <div *ngIf="seller">
+            <h3>Seller Details</h3>
 
-    <!-- Basic Seller Information -->
-    <p><strong>Username:</strong> {{ seller.username }}</p>
-    <p><strong>Email:</strong> {{ seller.email }}</p>
-    <p><strong>Role:</strong> {{ seller.role }}</p>
-    <p><strong>Rating Score:</strong> {{ seller.ratingScore }}</p>
+            <!-- Basic Seller Information -->
+            <div style="border: 1px solid #d2d9e1;
+             border-top: 2px solid #03f;
+             padding: 28px 24px;
+             margin-bottom: 20px;">
+                <p><strong>Username:</strong> {{ seller.username }}</p>
+                <p><strong>Email:</strong> {{ seller.email }}</p>
+                <p><strong>Role:</strong> {{ seller.role }}</p>
+                <p style="margin-bottom: 0;"><strong>Rating Score:</strong> {{ seller.ratingScore }} points</p>
+            </div>
 
-    <!-- Ratings Given by Other Users -->
-    <h3>Ratings</h3>
-    <div *ngIf="seller.ratingRatedUsers.length > 0; else noRatings">
-        <ul>
-            <li *ngFor="let rating of seller.ratingRatedUsers">
-                <p><strong>Rated by Username:</strong> {{ rating.ratedByUserUsername }}</p>
-                <p><strong>Item:</strong><button (click)="goToItemDetail(rating.itemId)">See Item</button> </p>
-                <p><strong>Rating Score:</strong> {{ rating.ratingScore }}</p>
-                <p><strong>Comments:</strong> {{ rating.comments }}</p>
-            </li>
-        </ul>
+
+            <!-- Ratings Given by Other Users -->
+            <h3>Ratings</h3>
+            <div *ngIf="seller.ratingRatedUsers.length > 0; else noRatings">
+                <ul style="
+                font-size: 15px;
+                list-style-type: none;
+                padding-left: 0;">
+                    <li style="border: 1px solid #d2d9e1;
+                    border-top: 2px solid #03f;
+                    padding: 28px 24px;
+                    margin-bottom: 20px;" *ngFor="let rating of seller.ratingRatedUsers">
+                        <p><strong>Rated by Username:</strong> {{ rating.ratedByUserUsername }}</p>
+                        <p><strong>Item:</strong><button (click)="goToItemDetail(rating.itemId)">See Item</button> </p>
+                        <p><strong>Rating Score:</strong> {{ rating.ratingScore }}</p>
+                        <p><strong>Comments:</strong> {{ rating.comments }}</p>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Show this message if no ratings are available -->
+            <ng-template #noRatings>
+                <p>No ratings available for this seller.</p>
+            </ng-template>
+        </div>
+
+        <!-- Error or Loading States -->
+        <div *ngIf="!seller">
+            <p>Loading seller details...</p>
+        </div>
     </div>
 
-    <!-- Show this message if no ratings are available -->
-    <ng-template #noRatings>
-        <p>No ratings available for this seller.</p>
-    </ng-template>
-</div>
+    <div class="item-list">
+        <div *ngFor="let item of items" class="card">
+            <div class="card-body">
+                <div class="image-grid">
+                    <!-- Chỉ hiển thị hình ảnh đầu tiên -->
+                    <img *ngIf="item.images.length > 0" [src]="item.images[0]" class="item-image"
+                        (click)="goToItemDetail(item.itemId)" alt="Item Image" style="cursor: pointer;" />
+                </div>
 
-<!-- Error or Loading States -->
-<div *ngIf="!seller">
-    <p>Loading seller details...</p>
+                <!-- Condition for Active and Current Bid higher than Minimum Bid -->
+                <div *ngIf="item.bidStatus === 'A' && item.minimumBid &lt; item.currentBid">
+                    <p class="item-title">{{ item.itemTitle }}</p>
+                    <p class="itemss">CURRENT BID </p>
+                    <div style="font-size: 20px; font-weight: bold;">{{ item.currentBid | currency }}</div>
+                </div>
+
+                <!-- Condition for Active and Current Bid equals Minimum Bid -->
+                <div *ngIf="item.bidStatus === 'A' && item.minimumBid === item.currentBid">
+                    <p class="item-title" [title]="item.itemTitle">{{ item.itemTitle }}</p>
+                    <p class="itemss">STARTING BID</p>
+                    <div>_____</div>
+                </div>
+
+                <!-- Condition for Upcoming Bid -->
+                <div *ngIf="item.bidStatus === 'I'">
+                    <p class="item-title">{{ item.itemTitle }}</p>
+                    <p class="itemss">UPCOMING BID</p>
+                    <div>_____</div>
+                </div>
+
+                <!-- Condition for Bidding Closed -->
+                <div *ngIf="item.bidStatus === 'E'">
+                    <p class="item-title">{{ item.itemTitle }}</p>
+                    <p class="itemss">BIDDING CLOSED</p>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </div>
