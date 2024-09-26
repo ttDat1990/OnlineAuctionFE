@@ -1,54 +1,127 @@
-<div class="container">
-    <h2>Add New Item</h2>
-    <form [formGroup]="itemForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+<div class="container1">
+  <h3>Add New Item</h3>
+  <form [formGroup]="itemForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data" class="form-ca">
+    <div>
       <div class="form-group">
         <label for="title">Title</label>
         <input type="text" id="title" formControlName="itemTitle" class="form-control" />
       </div>
-  
+      <div *ngIf="itemForm.get('itemTitle')?.touched && itemForm.get('itemTitle')?.errors?.['required']"
+        class="text-danger mb-4 mb-4">
+        Title is required
+      </div>
+
       <div class="form-group">
         <label for="description">Description</label>
-        <textarea id="description" formControlName="itemDescription" class="form-control"></textarea>
+        <textarea id="description" formControlName="itemDescription" class="form-control"
+          style="height: 200px;"></textarea>
       </div>
-  
+
       <div class="form-group">
         <label for="minBid">Minimum Bid</label>
         <input type="number" id="minBid" formControlName="minimumBid" class="form-control" />
       </div>
-  
+      <div *ngIf="itemForm.get('minimumBid')?.touched && itemForm.get('minimumBid')?.errors?.['required']"
+        class="text-danger mb-4">
+        Minimum Bid is required
+      </div>
+      <div *ngIf="itemForm.get('minimumBid')?.touched && itemForm.get('minimumBid')?.errors?.['min']"
+        class="text-danger mb-4">
+        Minimum Bid must be greater than or equal to 1.
+      </div>
+
       <div class="form-group">
         <label for="bidIncrement">Bid Increment</label>
         <input type="number" id="bidIncrement" formControlName="bidIncrement" class="form-control" />
       </div>
-  
-      <div class="form-group">
-        <label for="bidStartDate">Bid Start Date</label>
-        <input type="datetime-local" id="bidStartDate" formControlName="bidStartDate" class="form-control" />
+      <div *ngIf="itemForm.get('bidIncrement')?.touched && itemForm.get('bidIncrement')?.errors?.['required']"
+        class="text-danger mb-4">
+        Bid Increment is required
       </div>
-  
-      <div class="form-group">
-        <label for="bidEndDate">Bid End Date</label>
-        <input type="datetime-local" id="bidEndDate" formControlName="bidEndDate" class="form-control" />
+      <div *ngIf="itemForm.get('bidIncrement')?.touched && itemForm.get('bidIncrement')?.errors?.['min']"
+        class="text-danger mb-4">
+        Bid Increment must be greater than or equal to 1.
       </div>
-  
+
       <div class="form-group">
         <label for="category">Category</label>
         <select id="category" formControlName="categoryId" class="form-control">
           <option *ngFor="let category of categories" [value]="category.categoryId">{{ category.categoryName }}</option>
         </select>
       </div>
-  
+      <div *ngIf="itemForm.get('categoryId')?.touched && itemForm.get('categoryId')?.errors?.['required']"
+        class="text-danger mb-4">
+        Category is required
+      </div>
+    </div>
+    <div>
       <div class="form-group">
-        <label for="images">Upload Images</label>
+        <label for="bidStartDate">Bid Start Date</label>
+        <input type="datetime-local" id="bidStartDate" formControlName="bidStartDate" class="form-control" />
+      </div>
+      <div *ngIf="itemForm.get('bidStartDate')?.touched && itemForm.get('bidStartDate')?.errors?.['required']"
+        class="text-danger mb-4">
+        Bid Start Date is required
+      </div>
+      <div *ngIf="itemForm.get('bidStartDate')?.errors?.['startDateInvalid']" class="text-danger mb-4">
+        Bid Start Date must be at least 1 day from today
+      </div>
+
+      <div class="form-group">
+        <label for="bidEndDate">Bid End Date</label>
+        <input type="datetime-local" id="bidEndDate" formControlName="bidEndDate" class="form-control" />
+      </div>
+      <div *ngIf="itemForm.get('bidEndDate')?.touched && itemForm.get('bidEndDate')?.errors?.['required']"
+        class="text-danger mb-4">
+        Bid End Date is required
+      </div>
+      <div *ngIf="itemForm.errors?.['endDateInvalid']" class="text-danger mb-4">
+        Bid End Date must be greater than Bid Start Date
+      </div>
+
+      <div class="form-group">
+        <label for="images">Upload Images</label><br>
         <input type="file" id="images" (change)="onImageSelect($event)" multiple />
       </div>
-  
+      <!-- Danh sách các file hợp lệ -->
+      <ul *ngIf="selectedImages.length > 0">
+        <li *ngFor="let image of selectedImages">{{ image.name }} (Valid)</li>
+      </ul>
+      <div *ngIf="itemForm.get('images')?.touched && itemForm.get('images')?.errors?.['imageError']"
+        class="text-danger">
+        Please fix the errors with the selected files below:
+      </div>
+      <!-- Hiển thị các lỗi cho từng file không hợp lệ -->
+      <ul *ngIf="imageErrors.length > 0">
+        <li *ngFor="let error of imageErrors" class="text-danger">
+          {{ error.name }}: {{ error.error }}
+        </li>
+      </ul>
+
       <div class="form-group">
-        <label for="documents">Upload Documents</label>
+        <label for="documents">Upload Documents</label><br>
         <input type="file" id="documents" (change)="onDocumentSelect($event)" multiple />
       </div>
-  
-      <button type="submit" class="btn btn-primary" [disabled]="itemForm.invalid">Submit</button>
-    </form>
-  </div>
-  
+
+
+      <ul *ngIf="selectedDocuments.length > 0">
+        <li *ngFor="let document of selectedDocuments">{{ document.name }} (Valid)</li>
+      </ul>
+      <div *ngIf="itemForm.get('documents')?.touched && itemForm.get('documents')?.errors?.['documentError']"
+        class="text-danger">
+        Please fix the errors with the selected documents below:
+      </div>
+      <ul *ngIf="documentErrors.length > 0">
+        <li *ngFor="let error of documentErrors" class="text-danger">
+          {{ error.name }}: {{ error.error }}
+        </li>
+      </ul>
+      <div>
+        <button type="submit" class="btn btn-primary" [disabled]="itemForm.invalid">Submit</button>
+      </div>
+      <div *ngIf="errorMessage" class="mess">
+        {{ errorMessage }}
+      </div>
+    </div>
+  </form>
+</div>

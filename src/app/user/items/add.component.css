@@ -1,0 +1,39 @@
+.container1 {
+    font-family: basisGrotesqueMono, monospace;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 1200px;
+    margin: 50px auto;
+    /* Khoảng cách giữa phần item-info và bid-card */
+}
+
+.form-ca {
+    border: 1px solid #d2d9e1;
+    border-top: 2px solid #03f;
+    padding: 32px 0;
+    display: flex;
+}
+
+.form-ca div {
+    flex: 1;
+    padding: 0 20px;
+}
+
+input,
+textarea,
+select {
+    border-radius: 0;
+    border: 1px solid #f0f1f5;
+    height: 50px;
+    background-color: #f0f1f5;
+    box-shadow: none;
+    padding: 6px 12px;
+    margin: 0;
+    width: 100%;
+    font-size: 18px;
+}
+
+.mess {
+    color: red;
+}
