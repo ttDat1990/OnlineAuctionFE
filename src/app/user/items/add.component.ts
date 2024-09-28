@@ -38,7 +38,7 @@ export class AddItemsComponent {
         itemDescription: [''], // Không cần require
         minimumBid: ['', [Validators.required, Validators.min(1)]], // Giá trị dương
         bidIncrement: ['', [Validators.required, Validators.min(1)]], // Giá trị dương
-        bidStartDate: ['', [Validators.required, this.bidStartDateValidator]],
+        bidStartDate: ['', [Validators.required]],
         bidEndDate: ['', Validators.required],
         categoryId: ['', Validators.required],
         images: ['', [this.imageValidator.bind(this)]],
@@ -165,18 +165,18 @@ export class AddItemsComponent {
     }
   }
 
-  // Custom validator for bidStartDate to be at least 1 day from the current date
-  bidStartDateValidator(
-    control: AbstractControl
-  ): { [key: string]: boolean } | null {
-    const startDate = new Date(control.value);
-    const currentDate = new Date();
-    // Kiểm tra bidStartDate phải lớn hơn ít nhất 1 ngày so với ngày hiện tại
-    if (startDate < new Date(currentDate.setDate(currentDate.getDate() + 1))) {
-      return { startDateInvalid: true };
-    }
-    return null;
-  }
+  // // Custom validator for bidStartDate to be at least 1 day from the current date
+  // bidStartDateValidator(
+  //   control: AbstractControl
+  // ): { [key: string]: boolean } | null {
+  //   const startDate = new Date(control.value);
+  //   const currentDate = new Date();
+  //   // Kiểm tra bidStartDate phải lớn hơn ít nhất 1 ngày so với ngày hiện tại
+  //   if (startDate < new Date(currentDate.setDate(currentDate.getDate() + 1))) {
+  //     return { startDateInvalid: true };
+  //   }
+  //   return null;
+  // }
 
   // Custom validator for bidEndDate to be greater than bidStartDate
   bidEndDateValidator(group: FormGroup): { [key: string]: boolean } | null {

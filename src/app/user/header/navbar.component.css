@@ -200,14 +200,14 @@
 
 .notification-menu {
     position: absolute;
-    top: 100%;
-    left: -100px;
+    top: 52px;
+    left: -310px;
     background-color: white;
     border: 1px solid #ddd;
-    width: 250px !important;
+    width: 450px !important;
     z-index: 10;
     padding: 10px 0;
-    max-height: 300px;
+    max-height: 600px;
     overflow-y: auto;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }

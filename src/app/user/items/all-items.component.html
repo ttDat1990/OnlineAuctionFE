@@ -1,47 +1,78 @@
-<div class="item-list">
-  <div *ngFor="let item of items" class="card">
-    <div class="card-body">
-      <div class="image-grid">
-        <!-- Hình ảnh so le -->
-        <img *ngIf="item.images.length > 0" [src]="item.images[0]" class="item-image large-image" />
-        <img *ngIf="item.images.length > 1" [src]="item.images[1]" class="item-image medium-image" />
+<h2 class="query">All Bids</h2>
+<!-- Filters -->
+<div class="item-list1">
+  <div class="filter">
+    <label for="bidStatus">Filter by Bid Status:</label>
+    <select id="bidStatus" (change)="onBidStatusChange($event)">
+      <option value="">All</option>
+      <option value="A">Active</option>
+      <option value="I">Upcoming</option>
+      <option value="E">Closed</option>
+    </select>
 
-        <!-- Hình nhỏ và phần thông tin trong cùng một cột -->
-        <div class="small-image-info">
-          <img *ngIf="item.images.length > 2" [src]="item.images[2]" class="item-image small-image" />
-          <div *ngIf="item.images.length > 3" class="extra-images-info">
-            + {{ item.images.length - 3 }} more
-          </div>
+    <label for="category">Filter by Category:</label>
+    <select id="category" [(ngModel)]="selectedCategory" (change)="onCategoryChange($event)">
+      <option value="">All Categories</option>
+      <option *ngFor="let category of categories" [value]="category.categoryId">{{ category.categoryName }} ({{
+        category.itemCount }} items)</option>
+    </select>
+  </div>
+
+  @if(filteredItems && filteredItems.length > 0) {
+
+  <div class="item-list">
+    <div *ngFor="let item of filteredItems" class="card">
+      <div class="card-body">
+        <div class="image-grid">
+          <!-- Chỉ hiển thị hình ảnh đầu tiên -->
+          <img *ngIf="item.images.length > 0" [src]="item.images[0]" class="item-image"
+            (click)="goToDetail(item.itemId)" alt="Item Image" style="cursor: pointer;" />
         </div>
-      </div>
 
-      <!-- Condition for Active and Current Bid higher than Minimum Bid -->
-      <div *ngIf="item.bidStatus === 'A' && item.minimumBid &lt; item.currentBid">
-        <p>{{ item.itemTitle }}</p>
-        <p>Current Bid: {{ item.currentBid | currency }}</p>
-        <p>Time left: {{ formatCountdown(item.bidEndDate) }}</p>
-      </div>
+        <!-- Condition for Active and Current Bid higher than Minimum Bid -->
+        <div *ngIf="item.bidStatus === 'A' && item.minimumBid &lt; item.currentBid">
+          <p class="item-title">{{ item.itemTitle }}</p>
+          <p class="itemss">CURRENT BID </p>
+          <div style="font-size: 20px; font-weight: bold;">${{ item.currentBid | number:'1.0-0' }}</div>
+          <p>Time left: {{ formatCountdown(item.bidEndDate) }}</p>
+        </div>
 
-      <!-- Condition for Active and Current Bid equals Minimum Bid -->
-      <div *ngIf="item.bidStatus === 'A' && item.minimumBid === item.currentBid">
-        <p>{{ item.itemTitle }}</p>
-        <p>Starting Bid</p>
-        <p>Time left: {{ formatCountdown(item.bidEndDate) }}</p>
-      </div>
+        <!-- Condition for Active and Current Bid equals Minimum Bid -->
+        <div *ngIf="item.bidStatus === 'A' && item.minimumBid === item.currentBid">
+          <p class="item-title" [title]="item.itemTitle">{{ item.itemTitle }}</p>
+          <p class="itemss">STARTING BID</p>
+          <div>_____</div>
+          <p>Time left: {{ formatCountdown(item.bidEndDate) }}</p>
+        </div>
 
-      <!-- Condition for Upcoming Bid -->
-      <div *ngIf="item.bidStatus === 'I'">
-        <p>{{ item.itemTitle }}</p>
-        <p>Upcoming Bid</p>
-        <p>Starts in: {{ formatCountdown(item.bidStartDate) }}</p>
-      </div>
+        <!-- Condition for Upcoming Bid -->
+        <div *ngIf="item.bidStatus === 'I'">
+          <p class="item-title">{{ item.itemTitle }}</p>
+          <p class="itemss">UPCOMING BID</p>
+          <div>_____</div>
+          <p>Starts in: {{ formatCountdown(item.bidStartDate) }}</p>
+        </div>
 
-      <!-- Condition for Bidding Closed -->
-      <div *ngIf="item.bidStatus === 'E'">
-        <p>{{ item.itemTitle }}</p>
-        <p></p>
-        <p>Bidding closed</p>
+        <!-- Condition for Bidding Closed -->
+        <div *ngIf="item.bidStatus === 'E'">
+          <p class="item-title">{{ item.itemTitle }}</p>
+          <p class="itemss">BIDDING CLOSED</p>
+          <div></div>
+        </div>
       </div>
     </div>
   </div>
+  <!-- Pagination -->
+  <div class="pagination">
+    <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">Previous</button>
+    <span>Page {{ currentPage }}</span>
+    <button (click)="onPageChange(currentPage + 1)" [disabled]="filteredItems.length &lt; pageSize">Next</button>
+  </div>
+
+  } @else {
+  <div class="query1">
+    <p>Not found</p>
+  </div>
+
+  }
 </div>

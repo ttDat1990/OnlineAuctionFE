@@ -36,7 +36,7 @@ export class NavbarComponent {
   loadNotifications() {
     this.notificationService.getUserNotifications(this.userId).subscribe({
       next: (data: any[]) => {
-        this.notifications = data.filter((n) => !n.isRead);
+        this.notifications = data;
         this.unreadNotifications = data.filter((n) => !n.isRead).length;
       },
       error: (error) => {

@@ -10,6 +10,7 @@ import { AdminItemsComponent } from './admin/items/items.component';
 import { SearchItemsComponent } from './user/items/search-items.component';
 import { ItemDetailComponent } from './user/items/item-detail.component';
 import { SellerDetailComponent } from './user/items/seller-detail.component';
+import { AllItemsComponent } from './user/items/all-items.component';
 
 export const routes: Routes = [
   {
@@ -39,6 +40,10 @@ export const routes: Routes = [
       {
         path: 'search',
         component: SearchItemsComponent,
+      },
+      {
+        path: 'all-items',
+        component: AllItemsComponent,
       },
       {
         path: 'item-detail/:id',

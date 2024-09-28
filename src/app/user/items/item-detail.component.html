@@ -87,34 +87,53 @@
 
         <!-- Upcoming Bid -->
         <div *ngIf="item.bidStatus === 'I'">
-            <h3>Upcoming Bid</h3>
-            <p>Start in: {{ formatCountdown(item.bidStartDate) }}</p>
-            <p>Minimum Bid: {{ item.minimumBid | currency }}</p>
-            <p>Bid Increment: {{ item.bidIncrement | currency }}</p>
-            <p>Bid Start Date: {{ item.bidStartDate | date:'short' }}</p>
-            <p>Bid End Date: {{ item.bidEndDate | date:'short' }}</p>
+            <h4>Upcoming Bid</h4>
+            <div class="bid-detail">
+                <p>Start in: {{ formatCountdown(item.bidStartDate) }}</p>
+                <p>Minimum Bid: {{ item.minimumBid | number:'1.0-0' }}</p>
+                <p>Bid Increment: {{ item.bidIncrement | number:'1.0-0' }}</p>
+                <p>Bid Start Date: {{ item.bidStartDate | date:'short' }}</p>
+                <p>Bid End Date: {{ item.bidEndDate | date:'short' }}</p>
+            </div>
+
         </div>
 
         <!-- Bidding Closed -->
         <div *ngIf="item.bidStatus === 'E'">
-            <h3>Bidding Closed</h3>
-            <p>Final Bid: {{ item.currentBid | currency }}</p>
+            <h4>Bidding Closed</h4>
+            <div class="bid-detail">
+                <p style="
+                font-family: basisGrotesqueMono, monospace;
+                font-weight: 400;
+                font-size: 12px;
+                line-height: 1.2;
+                color: #919397;
+                letter-spacing: 2px;
+                margin-bottom: 2px;">Final Bid</p>
+                <p style="
+                font-family: basisGrotesqueMono, monospace;
+                font-weight: bold;
+                font-size: 40px;
+                line-height: 1.3;
+                margin-top: 8px;">${{ item.currentBid | number:'1.0-0' }}</p>
 
-            <!-- Check if there are any bidders -->
-            <div *ngIf="bids && bids.length > 0">
-                <p>Winner: {{ winner.bidderUsername }}</p>
+                <!-- Check if there are any bidders -->
+                <div *ngIf="bids && bids.length > 0">
+                    <p>Winner: {{ winner.bidderUsername }}</p>
 
-                <!-- List of Bidders -->
-                <h4>Bidders</h4>
-                <ul>
-                    <li *ngFor="let bid of bids">
-                        {{ bid.bidderUsername }} - {{ bid.bidAmount | currency }} ({{ bid.bidDate | date:'short' }})
-                    </li>
-                </ul>
+                    <!-- List of Bidders -->
+                    <h4>Bidders</h4>
+                    <ul>
+                        <li *ngFor="let bid of bids">
+                            {{ bid.bidderUsername }} - {{ bid.bidAmount | currency }} ({{ bid.bidDate | date:'short' }})
+                        </li>
+                    </ul>
+                </div>
+                <div *ngIf="bids && bids.length === 0">
+                    <p>No bidders</p>
+                </div>
             </div>
-            <div *ngIf="bids && bids.length === 0">
-                <p>No bidders</p>
-            </div>
+
         </div>
 
         <div *ngIf="showExistingRating; else ratingForm">
@@ -124,23 +143,33 @@
         </div>
 
         <ng-template #ratingForm>
-            <div *ngIf="showRatingForm">
-                <h3>Please rate the seller</h3>
+            <div *ngIf="showRatingForm" class="mt-5">
+                <h4>Please rate the seller</h4>
                 <form (ngSubmit)="submitRating()">
                     <label for="ratingScore">Rating Score:</label>
                     <select [(ngModel)]="ratingScore" name="ratingScore" required>
+                        <option [value]="-5">-5</option>
+                        <option [value]="-4">-4</option>
+                        <option [value]="-3">-3</option>
+                        <option [value]="-2">-2</option>
+                        <option [value]="-1">-1</option>
+                        <option [value]="0">0</option>
                         <option [value]="1">1</option>
                         <option [value]="2">2</option>
                         <option [value]="3">3</option>
                         <option [value]="4">4</option>
                         <option [value]="5">5</option>
                     </select>
-
+                    <br>
                     <label for="comments">Comments:</label>
-                    <textarea [(ngModel)]="comments" name="comments" placeholder="Leave your feedback here"
-                        required></textarea>
+                    <br>
+                    <div class="input-rating">
+                        <textarea [(ngModel)]="comments" name="comments" placeholder="Leave your feedback here"
+                            required></textarea>
+                        <br>
+                        <button type="submit">Submit Rating</button>
+                    </div>
 
-                    <button type="submit">Submit Rating</button>
                 </form>
             </div>
         </ng-template>

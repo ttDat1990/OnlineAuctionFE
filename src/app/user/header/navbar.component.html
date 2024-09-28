@@ -8,7 +8,7 @@
 
             <!-- Categories Dropdown -->
             <div class="categories">
-                <select class="category-select" [(ngModel)]="selectedCategoryId" (change)="onCategoryChange($event)">
+                <select class="category-select" (change)="onCategoryChange($event)">
                     <option value="">Category</option>
                     <!-- Sử dụng ngFor để lặp qua danh sách categories -->
                     <option *ngFor="let category of categories" [value]="category.categoryId">
@@ -35,8 +35,8 @@
             <a [routerLink]="['/user/add-item']" class="category-link">Sell</a>
 
             <!-- Favourite (Heart Icon) -->
-            <a href="#" class="icon-link">
-                <i class="fa-regular fa-heart"></i>
+            <a [routerLink]="['/user/all-items']" class="category-link">
+                All Bids
             </a>
 
             <!-- Notification (Bell Icon) -->
@@ -50,12 +50,16 @@
                     <div>YOUR NOTIFICATION</div>
                     <div *ngFor="let notification of notifications; let i = index" class="notification-item"
                         (click)="navigateToDetail(notification)">
+                        <i class="fa-solid fa-circle" *ngIf="!notification.isRead"
+                            style="color: red; margin-right: 5px;"></i>
                         <span>{{ notification.message }}</span>
                         <span>{{ notification.time | date: 'short' }}</span>
                     </div>
                     <div *ngIf="notifications.length === 0" class="no-notifications">
                         No new notifications
                     </div>
+                    <!-- <hr style="margin: 0;">
+                    <a style="font-size: 12px;text-align: center;">See all Notifications</a> -->
                 </div>
             </div>
 

@@ -59,7 +59,7 @@
                 <div *ngIf="item.bidStatus === 'A' && item.minimumBid &lt; item.currentBid">
                     <p class="item-title">{{ item.itemTitle }}</p>
                     <p class="itemss">CURRENT BID </p>
-                    <div style="font-size: 20px; font-weight: bold;">{{ item.currentBid | currency }}</div>
+                    <div style="font-size: 20px; font-weight: bold;">${{ item.currentBid | number:'1.0-0' }}</div>
                 </div>
 
                 <!-- Condition for Active and Current Bid equals Minimum Bid -->
