@@ -27,6 +27,7 @@ export class ItemDetailComponent {
   comments: string = '';
   showExistingRating: boolean = false;
   showRatingForm: boolean = false;
+  countdownInterval: any;
 
   constructor(
     private itemService: ItemService,
@@ -39,9 +40,17 @@ export class ItemDetailComponent {
   ngOnInit(): void {
     this.itemId = Number(this.route.snapshot.paramMap.get('id'));
 
+    this.loadData(); // Đặt logic tải dữ liệu trong một phương thức riêng
+
+    // Bắt đầu countdown
+    this.startCountdown();
+  }
+
+  // Tải lại dữ liệu khi cần
+  loadData(callback?: () => void): void {
     forkJoin([
-      this.itemService.getItemById(this.itemId), // API to get item details
-      this.bidService.getBidHistory(this.itemId), // API to get bid history
+      this.itemService.getItemById(this.itemId),
+      this.bidService.getBidHistory(this.itemId),
     ]).subscribe({
       next: ([item, bids]) => {
         this.item = item;
@@ -58,11 +67,54 @@ export class ItemDetailComponent {
         } else if (this.item.bidStatus === 'E' && this.bids.length === 0) {
           this.winner = 'No bidder';
         }
+
+        // Nếu có callback, gọi callback sau khi load xong dữ liệu
+        if (callback) {
+          callback();
+        }
       },
       error: (err) => {
         console.error('Error fetching data:', err);
       },
     });
+  }
+
+  startCountdown(): void {
+    this.countdownInterval = setInterval(() => {
+      if (this.item) {
+        let timeLeft: number;
+
+        // Kiểm tra trạng thái bidStatus
+        if (this.item.bidStatus === 'I') {
+          timeLeft = this.getTimeLeft(this.item.bidStartDate);
+        } else if (this.item.bidStatus === 'A') {
+          timeLeft = this.getTimeLeft(this.item.bidEndDate);
+        } else {
+          clearInterval(this.countdownInterval);
+          return; // Dừng interval nếu không hợp lệ
+        }
+
+        if (timeLeft <= 0) {
+          clearInterval(this.countdownInterval); // Dừng interval
+
+          if (this.item.bidStatus === 'I' || this.item.bidStatus === 'A') {
+            // Nếu trạng thái hiện tại là 'I' hoặc 'A', tải lại dữ liệu
+            this.loadData(() => {
+              // Sau khi dữ liệu được tải lại, kiểm tra lại trạng thái bidStatus
+              if (
+                (this.item && this.item.bidStatus === 'A') ||
+                (this.item && this.item.bidStatus === 'I')
+              ) {
+                this.startCountdown();
+              }
+            });
+          } else {
+            // Nếu trạng thái là 'E' thì chỉ tải lại dữ liệu
+            this.loadData();
+          }
+        }
+      }
+    }, 1000); // Đếm ngược mỗi giây
   }
 
   prevImage() {
@@ -111,7 +163,6 @@ export class ItemDetailComponent {
   formatCountdown(targetDate: string): string {
     const timeLeft = this.getTimeLeft(targetDate);
     if (timeLeft <= 0) {
-      window.location.reload();
       return 'Please reload for update Bid Status!';
     }
 

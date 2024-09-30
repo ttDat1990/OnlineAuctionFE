@@ -20,7 +20,7 @@ export class AllItemsComponent {
   selectedBidStatus: string = ''; // All statuses by default
   selectedCategory: string = ''; // All categories by default
   currentPage: number = 1;
-  pageSize: number = 10;
+  pageSize: number = 12;
 
   constructor(
     private itemService: ItemService,
