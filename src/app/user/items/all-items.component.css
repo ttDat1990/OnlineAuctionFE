@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Basis+Grotesque:wght@400;500;600&display=swap');
-
 .query {
     width: 100%;
     max-width: 1200px;
@@ -103,7 +101,7 @@
 }
 
 .itemss {
-    font-size: 10px;
+    font-size: 12px;
     margin-bottom: 0;
 }
 
@@ -125,4 +123,30 @@
         width: 100%;
         margin-bottom: 10px;
     }
+}
+
+.pagination button {
+    padding: 5px 10px;
+    background-color: #fff;
+    font-size: 18px;
+}
+
+.pagination button:hover {
+    color: rgba(29, 74, 255, 0.74);
+}
+
+.pagination span {
+    padding: 5px 10px;
+    background-color: #fff;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.pagination span:hover {
+    color: rgba(29, 74, 255, 0.74);
+}
+
+.active {
+    font-weight: bold;
+    color: rgba(29, 74, 255, 0.74);
 }

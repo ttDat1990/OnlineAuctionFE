@@ -11,11 +11,18 @@ import { SearchItemsComponent } from './user/items/search-items.component';
 import { ItemDetailComponent } from './user/items/item-detail.component';
 import { SellerDetailComponent } from './user/items/seller-detail.component';
 import { AllItemsComponent } from './user/items/all-items.component';
+import { AuthGuard } from './services/auth.service';
 
 export const routes: Routes = [
   {
     path: '',
-    component: LoginComponent,
+    component: UserLayoutComponent,
+    children: [
+      {
+        path: '',
+        component: HomeComponent,
+      },
+    ],
   },
   {
     path: 'login',
@@ -36,6 +43,7 @@ export const routes: Routes = [
       {
         path: 'add-item',
         component: AddItemsComponent,
+        canActivate: [AuthGuard],
       },
       {
         path: 'search',

@@ -13,14 +13,14 @@ import { NotificationService } from '../../services/notification.service';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent {
-  user: any = JSON.parse(localStorage.getItem('user'));
+  user: any = JSON.parse(localStorage.getItem('user') || 'null');
   categories: any[] = [];
   searchQuery: string = '';
   selectedCategoryId: string = '';
   showProfile: boolean = false;
   notifications: any[] = [];
   unreadNotifications: number = 0;
-  userId: number = JSON.parse(localStorage.getItem('user')).userId;
+  userId: number = this.user ? this.user.userId : null;
   showNotifications: boolean = false;
 
   constructor(
@@ -34,6 +34,7 @@ export class NavbarComponent {
     this.loadNotifications();
   }
   loadNotifications() {
+    if (this.user == null) return;
     this.notificationService.getUserNotifications(this.userId).subscribe({
       next: (data: any[]) => {
         this.notifications = data;
@@ -87,7 +88,7 @@ export class NavbarComponent {
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']);
   }
 
   onSearch() {
@@ -99,7 +100,9 @@ export class NavbarComponent {
     }
   }
 
-  profile() {}
+  profile(sellerUsername: string) {
+    this.router.navigate(['/user/seller-detail', sellerUsername]);
+  }
 
   fetchCategories() {
     // Fetch the categories from the backend
@@ -147,5 +150,9 @@ export class NavbarComponent {
         this.ngOnInit();
       }, 100); // 100ms delay to ensure async operation completes
     }
+  }
+
+  openLoginPage() {
+    this.router.navigate(['/login']);
   }
 }

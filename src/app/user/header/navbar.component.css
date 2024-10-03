@@ -1,17 +1,17 @@
-/* Import font vào file CSS chính hoặc HTML */
-@import url('https://fonts.googleapis.com/css2?family=Basis+Grotesque:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&display=swap"');
 
 /* Đảm bảo phần tử header có khoảng cách cố định từ trái và phải */
 .container1 {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 500;
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-    font-family: basisGrotesqueMono, monospace;
+    font-family: "Karla", sans-serif;
+    font-optical-sizing: auto;
     padding: 15px 0;
 }
 
@@ -30,7 +30,7 @@
 
 .logo-a {
     text-decoration: none;
-    font-size: 30px;
+    font-size: 40px;
     font-weight: 600;
     color: #03f;
 }
@@ -38,15 +38,17 @@
 /* Phần tử bên trái (logo và categories) */
 .header-left {
     display: flex;
+    justify-content: flex-start;
+    gap: 55px;
     align-items: center;
-    gap: 25px;
     flex: 5;
 }
 
 .header-right {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
+    gap: 50px;
     flex: 5;
 }
 
@@ -109,6 +111,10 @@
     font-size: 1.5rem;
 }
 
+.icon-link:hover {
+    color: #03f;
+}
+
 /* Dropdown và menu */
 .dropdown {
     position: relative;
@@ -151,7 +157,7 @@
     display: block;
     padding: 10px 20px;
     color: #3d3a3a;
-    font-size: 10px;
+    font-size: 13px;
 }
 
 .dropdown-menu a:hover {
@@ -176,10 +182,6 @@
     appearance: none;
     width: 100%;
     text-align: center;
-}
-
-.categories select:hover {
-    text-decoration-line: underline;
 }
 
 /* Notification badge and menu */
@@ -212,8 +214,14 @@
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
+.account-menu {
+    position: absolute;
+    top: 52px;
+    left: -60px;
+}
+
 .notification-item {
-    font-size: 14px !important;
+    font-size: 15px !important;
     /* overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis; */
@@ -222,6 +230,8 @@
     color: #000;
     font-weight: 500 !important;
     cursor: pointer;
+    padding-bottom: 0 !important;
+    padding-top: 0;
 }
 
 .notification-item span {
@@ -237,4 +247,14 @@
     text-align: center;
     padding: 10px;
     color: #888;
+}
+
+.category-link:hover {
+    cursor: pointer;
+    color: #03f;
+}
+
+.login-option:hover {
+    color: #03f;
+    text-decoration-line: none !important;
 }

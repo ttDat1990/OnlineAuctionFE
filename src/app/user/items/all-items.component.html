@@ -2,17 +2,15 @@
 <!-- Filters -->
 <div class="item-list1">
   <div class="filter">
-    <label for="bidStatus">Filter by Bid Status:</label>
-    <select id="bidStatus" (change)="onBidStatusChange($event)">
-      <option value="">All</option>
+    <select id="bidStatus" (change)="onBidStatusChange($event)" style="height: 40px;">
+      <option value="">Filter by Bid Status</option>
       <option value="A">Active</option>
       <option value="I">Upcoming</option>
       <option value="E">Closed</option>
     </select>
 
-    <label for="category">Filter by Category:</label>
     <select id="category" [(ngModel)]="selectedCategory" (change)="onCategoryChange($event)">
-      <option value="">All Categories</option>
+      <option value="">Filter by Category</option>
       <option *ngFor="let category of categories" [value]="category.categoryId">{{ category.categoryName }} ({{
         category.itemCount }} items)</option>
     </select>
@@ -63,9 +61,13 @@
     </div>
   </div>
   <!-- Pagination -->
-  <div class="pagination">
+  <div class="pagination mt-4">
     <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">Previous</button>
-    <span>Page {{ currentPage }}</span>
+    <!-- Hiển thị danh sách các trang -->
+    <span *ngFor="let page of pages" (click)="onPageChange(page)" [class.active]="page === currentPage"
+      style="cursor: pointer;">
+      {{ page }}
+    </span>
     <button (click)="onPageChange(currentPage + 1)" [disabled]="filteredItems.length &lt; pageSize">Next</button>
   </div>
 

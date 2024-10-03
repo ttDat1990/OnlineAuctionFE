@@ -1,5 +1,6 @@
 .container1 {
-    font-family: basisGrotesqueMono, monospace;
+    font-family: "Karla", sans-serif;
+    font-optical-sizing: auto;
     width: 100%;
     max-width: 1200px;
     margin: 50px auto;

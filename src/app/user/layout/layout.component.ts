@@ -2,10 +2,17 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from '../header/navbar.component';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   standalone: true,
-  imports: [FormsModule, RouterLink, RouterOutlet, NavbarComponent],
+  imports: [
+    FormsModule,
+    RouterLink,
+    RouterOutlet,
+    NavbarComponent,
+    FooterComponent,
+  ],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css',
 })

@@ -6,15 +6,9 @@
                 <a [routerLink]="['/user/home']" class="logo-a">Auction</a>
             </div>
 
-            <!-- Categories Dropdown -->
-            <div class="categories">
-                <select class="category-select" (change)="onCategoryChange($event)">
-                    <option value="">Category</option>
-                    <!-- Sử dụng ngFor để lặp qua danh sách categories -->
-                    <option *ngFor="let category of categories" [value]="category.categoryId">
-                        {{ category.categoryName }} ({{ category.itemCount }} items)
-                    </option>
-                </select>
+
+            <div [routerLink]="['/user/all-items']" class="category-link">
+                All Items
             </div>
 
         </div>
@@ -32,11 +26,11 @@
 
         <div class="header-right">
             <!-- Sell -->
-            <a [routerLink]="['/user/add-item']" class="category-link">Sell</a>
+            <div [routerLink]="['/user/add-item']" class="category-link">Sell</div>
 
             <!-- Favourite (Heart Icon) -->
-            <a [routerLink]="['/user/all-items']" class="category-link">
-                All Bids
+            <a class="icon-link">
+                <i class="fa-regular fa-heart"></i>
             </a>
 
             <!-- Notification (Bell Icon) -->
@@ -50,28 +44,31 @@
                     <div>YOUR NOTIFICATION</div>
                     <div *ngFor="let notification of notifications; let i = index" class="notification-item"
                         (click)="navigateToDetail(notification)">
+                        <div style="padding: 0;">{{ notification.notificationDate | date: 'short' }}</div>
                         <i class="fa-solid fa-circle" *ngIf="!notification.isRead"
                             style="color: red; margin-right: 5px;"></i>
                         <span>{{ notification.message }}</span>
-                        <span>{{ notification.time | date: 'short' }}</span>
+                        <hr style="margin-bottom: 0;">
                     </div>
                     <div *ngIf="notifications.length === 0" class="no-notifications">
                         No new notifications
                     </div>
-                    <!-- <hr style="margin: 0;">
-                    <a style="font-size: 12px;text-align: center;">See all Notifications</a> -->
                 </div>
             </div>
 
             <!-- User Dropdown -->
             <div class="dropdown">
-                <span class="user-name" (click)="toggleProfileDropdown($event)">
-                    {{user.username}}
+                <span class="login-option" *ngIf="userId; else loginOption" (click)="toggleProfileDropdown($event)">
+                    {{ user.username }}
                 </span>
+                <ng-template #loginOption>
+                    <span class="login-option" (click)="openLoginPage()">Log In</span>
+                </ng-template>
 
-                <div class="dropdown-menu" *ngIf="showProfile">
+                <!-- User profile dropdown (only when logged in) -->
+                <div class="dropdown-menu account-menu" *ngIf="showProfile && userId">
                     <div>ACCOUNT</div>
-                    <a (click)="profile()">Profile</a>
+                    <a (click)="profile(user.username)">Profile</a>
                     <a (click)="logout()">Sign Out</a>
                 </div>
             </div>

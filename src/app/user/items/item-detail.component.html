@@ -42,30 +42,33 @@
             <p>Close in: {{ formatCountdown(item.bidEndDate) }}</p>
             <div class="bid-detail">
                 <p style="
-                font-family: basisGrotesqueMono, monospace;
+                font-family: 'Karla', sans-serif;
+                font-optical-sizing: auto;
                 font-weight: 400;
-                font-size: 12px;
+                font-size: 13px;
                 line-height: 1.2;
                 color: #919397;
                 letter-spacing: 2px;
                 margin-bottom: 2px;">{{ item.currentBid > item.minimumBid ? 'CURRENT BID' : 'STARTING BID' }}</p>
                 <p style="
-                font-family: basisGrotesqueMono, monospace;
+                font-family: 'Karla', sans-serif;
+                font-optical-sizing: auto;
                 font-weight: bold;
                 font-size: 40px;
                 line-height: 1.3;
                 margin-top: 8px;">${{ item.currentBid | number:'1.0-0' }}</p>
 
                 <p style="
-                font-family: basisGrotesqueMono, monospace;
+                font-family: 'Karla', sans-serif;
+                font-optical-sizing: auto;
                 font-weight: 400;
-                font-size: 14px;
+                font-size: 15px;
                 line-height: 1.2;
                 color: #919397;
                 letter-spacing: 2px;
                 margin-bottom: 15px;">Bid Increment: ${{ item.bidIncrement | number:'1.0-0' }}</p>
 
-                <div class="input-bid" *ngIf="user.username !== item.sellerUsername">
+                <div class="input-bid" *ngIf="user && user.username !== item.sellerUsername">
                     <!-- Input for new bid -->
                     <input type="number" class="form-control" [(ngModel)]="newBidAmount" placeholder="Enter your bid" />
                     <button class="btn-search" (click)="submitBid()">Place Bid</button>
@@ -73,7 +76,7 @@
 
                 <!-- List of Bidders -->
                 <h4 style="margin-top: 20px;">Bidders</h4>
-                <ul style="font-size: 15px;
+                <ul style="font-size: 16px;
                 list-style-type: none;
                 padding-left: 0;">
                     <li *ngFor="let bid of bids">

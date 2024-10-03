@@ -19,6 +19,14 @@ export class UserService {
       )
     );
   }
+  async loginWithGoogle(idToken: string) {
+    return lastValueFrom(
+      this.httpClient.post(
+        this.baseUrlService.BASE_URL + 'users/loginWithGoogle',
+        { idToken }
+      )
+    );
+  }
   async register(userData: any) {
     return lastValueFrom(
       this.httpClient.post(

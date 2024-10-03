@@ -21,7 +21,7 @@ export class ItemDetailComponent {
   winner: any = null;
   currentImageIndex: number = 0;
   currentImage: string = '';
-  user: any = JSON.parse(localStorage.getItem('user'));
+  user: any = JSON.parse(localStorage.getItem('user') || 'null');
   seller: any;
   ratingScore: number = 5; // Default score
   comments: string = '';

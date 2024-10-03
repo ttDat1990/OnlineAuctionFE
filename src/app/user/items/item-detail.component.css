@@ -1,10 +1,11 @@
 .container1 {
-    font-family: basisGrotesqueMono, monospace;
+    font-family: "Karla", sans-serif;
+    font-optical-sizing: auto;
     display: flex;
     width: 100%;
     max-width: 1200px;
     margin: 50px auto;
-    /* Khoảng cách giữa phần item-info và bid-card */
+    font-size: 18px;
 }
 
 .item-info {

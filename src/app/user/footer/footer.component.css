@@ -1,0 +1,44 @@
+/* Import font vào file CSS chính hoặc HTML */
+@import url('https://fonts.googleapis.com/css2?family=Basis+Grotesque:wght@400;500;600&display=swap');
+
+/* Đảm bảo phần tử header có khoảng cách cố định từ trái và phải */
+.container1 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 18px;
+    font-weight: 500;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: "Karla", sans-serif;
+    font-optical-sizing: auto;
+    padding: 15px 0;
+}
+
+.container2 {
+    width: 100%;
+    background-color: #fff;
+    margin-bottom: 40px;
+    margin-top: 30px;
+}
+
+.footer-link {
+    color: #919397;
+    transition: all .1s ease-in-out;
+}
+
+a,
+a:focus,
+a:hover {
+    text-decoration: none;
+}
+
+a {
+    cursor: pointer;
+    outline: none;
+}
+
+.footer-link:hover {
+    text-decoration-line: underline;
+}

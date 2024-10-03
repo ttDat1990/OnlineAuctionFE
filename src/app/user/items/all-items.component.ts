@@ -21,6 +21,8 @@ export class AllItemsComponent {
   selectedCategory: string = ''; // All categories by default
   currentPage: number = 1;
   pageSize: number = 12;
+  totalPages: number = 1;
+  pages: number[] = [];
 
   constructor(
     private itemService: ItemService,
@@ -86,6 +88,10 @@ export class AllItemsComponent {
       );
     }
 
+    this.totalPages = Math.ceil(tempItems.length / this.pageSize);
+    // Tạo danh sách các trang
+    this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
+
     // Apply pagination
     const startIndex = (this.currentPage - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
@@ -108,8 +114,10 @@ export class AllItemsComponent {
 
   // Pagination controls
   onPageChange(page: number) {
-    this.currentPage = page;
-    this.applyFilters();
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.applyFilters();
+    }
   }
 
   getTimeLeft(targetDate: string): number {
