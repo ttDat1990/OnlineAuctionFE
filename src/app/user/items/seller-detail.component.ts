@@ -15,6 +15,8 @@ import { interval } from 'rxjs';
 export class SellerDetailComponent {
   seller: any;
   items: any[] = [];
+  selectedTab: string = 'details';
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -59,5 +61,9 @@ export class SellerDetailComponent {
 
   goToItemDetail(itemId: number) {
     this.router.navigate(['/user/item-detail', itemId]);
+  }
+
+  selectTab(tab: string) {
+    this.selectedTab = tab;
   }
 }

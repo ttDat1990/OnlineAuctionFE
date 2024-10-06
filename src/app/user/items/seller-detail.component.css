@@ -4,7 +4,7 @@
     width: 100%;
     max-width: 1200px;
     margin: 50px auto;
-    display: flex;
+    min-height: 100vh;
 }
 
 .info-container {
@@ -22,7 +22,7 @@
 }
 
 .card {
-    width: 30%;
+    width: 23%;
     margin-bottom: 20px;
     border-radius: unset;
     box-shadow: none;
@@ -72,4 +72,31 @@
 .itemss {
     font-size: 10px;
     margin-bottom: 0;
+}
+
+.nav-tabs {
+    margin-bottom: 20px;
+}
+
+.nav-tabs .nav-link {
+    cursor: pointer;
+    color: black;
+}
+
+.nav-tabs .nav-link.active {
+    font-weight: bold;
+    border-bottom: 2px solid #007bff;
+    color: #007bff;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+
+.nav-tabs .nav-link:hover {
+    font-weight: bold;
+    border-bottom: 2px solid #007bff;
+    color: #007bff;
+    border-top: none;
+    border-left: none;
+    border-right: none;
 }
