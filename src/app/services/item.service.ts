@@ -48,4 +48,10 @@ export class ItemService {
       `${this.baseUrlService.BASE_URL}items/${itemId}`
     );
   }
+
+  getFavItemByUserId(userId: number): Observable<any> {
+    return this.httpClient.get(
+      `${this.baseUrlService.BASE_URL}favorites/user/${userId}`
+    );
+  }
 }

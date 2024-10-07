@@ -17,6 +17,14 @@
                 <button (click)="prevImage()">&#10094;</button>
                 <img [src]="currentImage" class="item-image" alt="Item Image">
                 <button (click)="nextImage()">&#10095;</button>
+                <div class="add-to-fav">
+                    <i class="fa-regular fa-heart"></i>
+                    <span>{{ item.favoritesCount }}</span>
+                </div>
+                <div class="add-to-fav1" (click)="toggleFavourite()">
+                    <span *ngIf="!isFavorited">Add to Favourite</span>
+                    <span *ngIf="isFavorited">Remove from Favourite</span>
+                </div>
             </div>
         </div>
 

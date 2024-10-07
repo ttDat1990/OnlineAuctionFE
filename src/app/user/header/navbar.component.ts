@@ -155,4 +155,14 @@ export class NavbarComponent {
   openLoginPage() {
     this.router.navigate(['/login']);
   }
+
+  goToFavItems(): void {
+    if (this.userId) {
+      // Nếu có userId, điều hướng đến trang yêu thích
+      this.router.navigate(['/user/fav-items']);
+    } else {
+      // Nếu không có userId, điều hướng đến trang đăng nhập
+      this.openLoginPage();
+    }
+  }
 }

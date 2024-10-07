@@ -6,6 +6,7 @@ import { forkJoin } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../services/user.service';
+import { FavouriteService } from '../../services/favourite.service';
 
 @Component({
   standalone: true,
@@ -28,11 +29,13 @@ export class ItemDetailComponent {
   showExistingRating: boolean = false;
   showRatingForm: boolean = false;
   countdownInterval: any;
+  isFavorited: boolean = false;
 
   constructor(
     private itemService: ItemService,
     private bidService: BidService,
     private userService: UserService,
+    private favoriteService: FavouriteService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -41,7 +44,7 @@ export class ItemDetailComponent {
     this.itemId = Number(this.route.snapshot.paramMap.get('id'));
 
     this.loadData(); // Đặt logic tải dữ liệu trong một phương thức riêng
-
+    this.checkIfFavourite();
     // Bắt đầu countdown
     this.startCountdown();
   }
@@ -246,5 +249,28 @@ export class ItemDetailComponent {
         this.showRatingForm = false;
       },
     });
+  }
+
+  // Kiểm tra xem item có nằm trong danh sách yêu thích không
+  checkIfFavourite() {
+    this.favoriteService
+      .isFavourite(this.user.userId, this.itemId)
+      .subscribe((response) => {
+        this.isFavorited = response.isFavourite;
+      });
+  }
+
+  // Chuyển đổi trạng thái yêu thích
+  toggleFavourite() {
+    if (!this.user) {
+      alert('Please log in to add this item to your favorites.');
+      return;
+    }
+
+    this.favoriteService
+      .toggleFavourite(this.user.userId, this.item.itemId)
+      .subscribe((response) => {
+        this.ngOnInit();
+      });
   }
 }

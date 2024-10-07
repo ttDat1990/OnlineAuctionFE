@@ -12,6 +12,7 @@ import { ItemDetailComponent } from './user/items/item-detail.component';
 import { SellerDetailComponent } from './user/items/seller-detail.component';
 import { AllItemsComponent } from './user/items/all-items.component';
 import { AuthGuard } from './services/auth.service';
+import { FavItemsComponent } from './user/items/fav-items.component';
 
 export const routes: Routes = [
   {
@@ -52,6 +53,10 @@ export const routes: Routes = [
       {
         path: 'all-items',
         component: AllItemsComponent,
+      },
+      {
+        path: 'fav-items',
+        component: FavItemsComponent,
       },
       {
         path: 'item-detail/:id',

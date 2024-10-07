@@ -91,3 +91,35 @@ p {
     width: 100%;
   }
 }
+
+.add-to-fav {
+  position: absolute;
+  top: 20px;
+  /* Khoảng cách từ trên xuống */
+  left: 20px;
+  /* Nền trong suốt */
+  padding: 5px 10px;
+  /* Padding cho nút */
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 25px;
+  /* Màu nền với độ trong suốt */
+}
+
+.add-to-fav i {
+  font-size: 25px;
+  /* Kích thước biểu tượng */
+  color: #03f;
+  /* Màu cho biểu tượng */
+}
+
+.add-to-fav span {
+  font-size: 20x;
+  /* Kích thước biểu tượng */
+}
+
+.image-grid {
+  position: relative;
+}

@@ -29,9 +29,9 @@
             <div [routerLink]="['/user/add-item']" class="category-link">Sell</div>
 
             <!-- Favourite (Heart Icon) -->
-            <a class="icon-link">
+            <a class="icon-link" (click)="goToFavItems()">
                 <i class="fa-regular fa-heart"></i>
-            </a>
+            </a>            
 
             <!-- Notification (Bell Icon) -->
             <div class="dropdown notification-dropdown">
