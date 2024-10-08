@@ -68,4 +68,27 @@ export class UserService {
       `${this.baseUrlService.BASE_URL}ratings/item/${itemId}`
     );
   }
+
+  forgotPassword(email: string): Observable<any> {
+    return this.httpClient.post(`${this.baseUrlService.BASE_URL}users/forgot`, {
+      email,
+    });
+  }
+
+  resetPassword(
+    email: string,
+    resetCode: string,
+    newPassword: string
+  ): Observable<any> {
+    const resetData = {
+      email,
+      resetCode,
+      newPassword,
+    };
+
+    return this.httpClient.post(
+      `${this.baseUrlService.BASE_URL}users/reset`,
+      resetData
+    );
+  }
 }

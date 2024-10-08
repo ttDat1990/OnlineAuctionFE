@@ -13,6 +13,8 @@ import { SellerDetailComponent } from './user/items/seller-detail.component';
 import { AllItemsComponent } from './user/items/all-items.component';
 import { AuthGuard } from './services/auth.service';
 import { FavItemsComponent } from './user/items/fav-items.component';
+import { ResetPasswordS1Component } from './reset-password-s1.component';
+import { ResetPasswordS2Component } from './reset-password-s2.component';
 
 export const routes: Routes = [
   {
@@ -28,6 +30,14 @@ export const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+  },
+  {
+    path: 'reset-password-s1',
+    component: ResetPasswordS1Component,
+  },
+  {
+    path: 'reset-password-s2',
+    component: ResetPasswordS2Component,
   },
   {
     path: 'register',
