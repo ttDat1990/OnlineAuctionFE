@@ -1,0 +1,30 @@
+.pagination .page-item.active .page-link {
+    background-color: #fff;
+    /* Nền màu xám nhạt */
+    color: #007bff;
+    /* Màu chữ xanh lam */
+    font-weight: bold;
+    /* Chữ in đậm */
+}
+
+.pagination .page-item .page-link {
+    cursor: pointer;
+}
+
+.pagination {
+    vertical-align: middle;
+}
+
+.table td {
+    vertical-align: middle;
+    /* Căn giữa theo phương đứng */
+    text-align: center;
+    /* Căn giữa theo phương ngang, nếu cần */
+}
+
+.table th {
+    vertical-align: middle;
+    /* Căn giữa theo phương đứng */
+    text-align: center;
+    /* Căn giữa theo phương ngang, nếu cần */
+}

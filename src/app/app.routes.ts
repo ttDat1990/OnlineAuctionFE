@@ -15,6 +15,8 @@ import { AuthGuard } from './services/auth.service';
 import { FavItemsComponent } from './user/items/fav-items.component';
 import { ResetPasswordS1Component } from './reset-password-s1.component';
 import { ResetPasswordS2Component } from './reset-password-s2.component';
+import { AdminCategoryComponent } from './admin/category/category.component';
+import { AdminUserComponent } from './admin/user/user.component';
 
 export const routes: Routes = [
   {
@@ -67,6 +69,7 @@ export const routes: Routes = [
       {
         path: 'fav-items',
         component: FavItemsComponent,
+        canActivate: [AuthGuard],
       },
       {
         path: 'item-detail/:id',
@@ -81,14 +84,23 @@ export const routes: Routes = [
   {
     path: 'admin',
     component: AdminLayoutComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: 'dashboard',
         component: DashboardComponent,
       },
       {
-        path: 'items',
+        path: 'item',
         component: AdminItemsComponent,
+      },
+      {
+        path: 'category',
+        component: AdminCategoryComponent,
+      },
+      {
+        path: 'user',
+        component: AdminUserComponent,
       },
     ],
   },

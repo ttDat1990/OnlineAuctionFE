@@ -8,5 +8,11 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
   templateUrl: './layout.component.html',
 })
 export class AdminLayoutComponent {
+  user: any = JSON.parse(localStorage.getItem('user') || 'null');
   constructor(private router: Router) {}
+  logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    this.router.navigate(['/']);
+  }
 }
