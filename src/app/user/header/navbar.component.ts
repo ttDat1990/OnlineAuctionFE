@@ -143,13 +143,17 @@ export class NavbarComponent {
     const notificationId = notification.notificationId;
     const itemId = this.findIdFromString(notification.message);
 
-    if (notificationId !== null && itemId !== null) {
+    if (notificationId !== null) {
       this.markNotificationsAsRead(notificationId); // Mark notification as read
+    }
+
+    if (itemId !== null) {
       setTimeout(() => {
         this.router.navigate(['/user/item-detail', itemId]);
-        this.ngOnInit();
       }, 100); // 100ms delay to ensure async operation completes
     }
+
+    this.ngOnInit();
   }
 
   openLoginPage() {

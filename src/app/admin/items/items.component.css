@@ -1,0 +1,65 @@
+.pagination .page-item.active .page-link {
+    background-color: #fff;
+    /* Nền màu xám nhạt */
+    color: #007bff;
+    /* Màu chữ xanh lam */
+    font-weight: bold;
+    /* Chữ in đậm */
+}
+
+.pagination .page-item .page-link {
+    cursor: pointer;
+}
+
+.pagination {
+    vertical-align: middle;
+}
+
+.table td {
+    vertical-align: middle;
+    /* Căn giữa theo phương đứng */
+    text-align: center;
+    /* Căn giữa theo phương ngang, nếu cần */
+}
+
+.table th {
+    vertical-align: middle;
+    /* Căn giữa theo phương đứng */
+    text-align: center;
+    /* Căn giữa theo phương ngang, nếu cần */
+}
+
+.filter {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 20px;
+}
+
+.modal {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-top: 200px;
+    margin-left: 650px;
+}
+
+.modal-actions {
+    margin-top: 15px;
+}
+
+.modal-actions button {
+    margin-right: 10px;
+}

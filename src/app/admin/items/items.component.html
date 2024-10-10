@@ -1,1 +1,90 @@
-List of Items Page for Admin
+<div class="container"
+    style="padding-top: 50px; padding-left: 50px; display: flex;align-items: center; justify-content: center;">
+    <div class="card" style="width: 100%">
+        <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <h2 class="card-title" style="margin: 0; font-size: 25px; margin-right: 600px;">List of Items</h2>
+            <div class="filter" style="float: right;">
+                <select id="bidStatus" (change)="onBidStatusChange($event)" style="height: 40px;">
+                    <option value="">All Bid Status</option>
+                    <option value="A">Active (A)</option>
+                    <option value="I">Upcoming (I)</option>
+                    <option value="E">Closed (E)</option>
+                </select>
+
+                <select id="category" [(ngModel)]="selectedCategory" (change)="onCategoryChange($event)">
+                    <option value="">All Categories</option>
+                    <option *ngFor="let category of categories" [value]="category.categoryId">{{ category.categoryName
+                        }} ({{
+                        category.itemCount }} items)</option>
+                </select>
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered" style="table-layout: fixed; width: 100%;">
+                <thead>
+                    <tr>
+                        <th style="width: 250px;">Name</th>
+                        <th style="width: 85px;">Minimum Bid</th>
+                        <th style="width: 90px;">Bid Increment</th>
+                        <th style="width: 85px;">Current Bid</th>
+                        <th style="width: 100px;">Bid Start Date</th>
+                        <th style="width: 100px;">Bid End Date</th>
+                        <th style="width: 85px;">Bid Status</th>
+                        <th style="width: 85px;">Favourite Count</th>
+                        <th style="width: 85px;">Seller</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of paginatedItems">
+                        <td style="
+                            width: 250px; /* Bề rộng của cột */
+                            white-space: nowrap; /* Không xuống dòng */
+                            overflow: hidden; /* Ẩn phần tràn ra */
+                            text-overflow: ellipsis; /* Hiển thị dấu ba chấm khi bị tràn */
+                            text-align: left;
+                        ">{{ item.itemTitle }}</td>
+                        <td>{{ item.minimumBid }}</td>
+                        <td>{{ item.bidIncrement }}</td>
+                        <td>{{ item.currentBid }}</td>
+                        <td>{{ item.bidStartDate | date:'short' }}</td>
+                        <td>{{ item.bidEndDate | date:'short' }}</td>
+                        <td>{{ item.bidStatus }}</td>
+                        <td>{{ item.favoritesCount }}</td>
+                        <td>{{ item.sellerUsername }}</td>
+                        <td>
+                            <button (click)="openDeleteModal(item.itemId)" class="btn btn-danger">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer clearfix">
+            <ul class="pagination pagination-sm m-0 float-right">
+                <li class="page-item" [class.disabled]="currentPage === 1">
+                    <a class="page-link" (click)="onPageChange(currentPage - 1)">«</a>
+                </li>
+                <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index"
+                    [class.active]="currentPage === i + 1">
+                    <a class="page-link" (click)="onPageChange(i + 1)">{{ i + 1 }}</a>
+                </li>
+                <li class="page-item" [class.disabled]="currentPage === totalPages">
+                    <a class="page-link" (click)="onPageChange(currentPage + 1)">»</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Modal xóa -->
+  <div *ngIf="showModal" class="modal" style="display: block;">
+    <div class="modal-content">
+      <h3>Delete Item</h3>
+      <p>Enter the reason for deletion:</p>
+      <textarea [(ngModel)]="deleteReason" rows="3" placeholder="Reason for deletion"></textarea>
+      <div class="modal-actions">
+        <button (click)="confirmDelete()" class="btn btn-danger">Confirm Delete</button>
+        <button (click)="closeModal()" class="btn btn-secondary">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

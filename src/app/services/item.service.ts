@@ -54,4 +54,18 @@ export class ItemService {
       `${this.baseUrlService.BASE_URL}favorites/user/${userId}`
     );
   }
+
+  deleteItem(itemId: number, description: string): Observable<any> {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.error('Token is missing');
+      throw new Error('Token is missing');
+    }
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    return this.httpClient.delete(
+      `${this.baseUrlService.BASE_URL}items/deleteItem/${itemId}?description=${description}`,
+      { headers }
+    );
+  }
 }
