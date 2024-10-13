@@ -11,9 +11,9 @@ export class UserService {
     private httpClient: HttpClient,
     private baseUrlService: BaseUrlSevice
   ) {}
-  async login(loginData: any) {
+  async login(loginData: any): Promise<LoginResponse> {
     return lastValueFrom(
-      this.httpClient.post(
+      this.httpClient.post<LoginResponse>(
         this.baseUrlService.BASE_URL + 'users/login',
         loginData
       )
@@ -91,4 +91,38 @@ export class UserService {
       resetData
     );
   }
+
+  showAllUsers(): Observable<any> {
+    return this.httpClient.get(
+      this.baseUrlService.BASE_URL + 'users/showAllUsers'
+    );
+  }
+  findUser(username: string): Observable<any> {
+    return this.httpClient.get(
+      this.baseUrlService.BASE_URL + 'users/findUser/' + username
+    );
+  }
+  statusUser(username: string): Observable<any> {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.error('Token is missing');
+      throw new Error('Token is missing');
+    }
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    });
+    return this.httpClient.patch(
+      `${this.baseUrlService.BASE_URL}users/StatusUser/${username}`,
+      {},
+      { headers }
+    );
+  }
+}
+
+export interface LoginResponse {
+  success: boolean;
+  token?: string;
+  user?: any;
+  message?: string;
 }

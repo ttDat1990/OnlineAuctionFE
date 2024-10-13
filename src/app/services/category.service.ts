@@ -63,4 +63,18 @@ export class CategoryService {
       { headers }
     );
   }
+
+  mergeCategories(
+    targetCategoryId: number,
+    sourceCategoryIds: number[]
+  ): Observable<any> {
+    const mergeData = {
+      targetCategoryId,
+      sourceCategoryIds,
+    };
+    return this.httpClient.post(
+      `${this.baseUrlService.BASE_URL}categories/merge`,
+      mergeData
+    );
+  }
 }

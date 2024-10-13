@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { UserService } from './services/user.service';
+import { LoginResponse, UserService } from './services/user.service';
 import { NavbarComponent } from './user/header/navbar.component';
 
 declare var google: any;
@@ -47,31 +47,37 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       const userData = this.loginForm.value;
       this.userService.login(userData).then(
-        (response) => {
-          localStorage.setItem('token', response['token']);
-          localStorage.setItem('user', JSON.stringify(response['user']));
+        (response: LoginResponse) => {
+          // Sử dụng kiểu LoginResponse
+          if (response.success) {
+            localStorage.setItem('token', response.token);
+            localStorage.setItem('user', JSON.stringify(response.user));
 
-          // Save credentials if "Remember Me" is checked
-          console.log(this.isRemembered);
-          if (this.isRemembered) {
-            localStorage.setItem(
-              'rememberedUser',
-              JSON.stringify({
-                username: userData.username,
-              })
-            );
-          } else {
-            localStorage.removeItem('rememberedUser');
-          }
+            if (this.isRemembered) {
+              localStorage.setItem(
+                'rememberedUser',
+                JSON.stringify({
+                  username: userData.username,
+                })
+              );
+            } else {
+              localStorage.removeItem('rememberedUser');
+            }
 
-          if (response['user'].role == 'NormalUser') {
-            this.router.navigate(['/user/home']);
-          } else {
-            this.router.navigate(['/admin/dashboard']);
+            // Chuyển hướng người dùng dựa trên vai trò
+            if (response.user.role == 'NormalUser') {
+              this.router.navigate(['/user/home']);
+            } else {
+              this.router.navigate(['/admin/dashboard']);
+            }
+          } else if (!response.success) {
+            this.errorMessage = response.message || 'An error occurred.';
           }
+          console.log(response.message);
         },
         (error) => {
-          this.errorMessage = 'Username or password is incorrect.';
+          this.errorMessage =
+            error.error.message || 'Username or password is incorrect.';
         }
       );
     } else {

@@ -1,1 +1,82 @@
-User
+<div class="container"
+    style="padding-top: 50px; padding-left: 50px; display: flex;align-items: center; justify-content: center;">
+    <div class="card" style="width: 100%">
+        <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <h2 class="card-title" style="margin: 0; font-size: 25px; margin-right: 600px;">List of Users</h2>
+            <div class="search-bar">
+                <button type="button" class="btn-search" (click)="onSearch()">
+                    <i class="fas fa-search"></i>
+                </button>
+                <input type="search" class="form-control" [(ngModel)]="searchQuery" placeholder="Search for Username">
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered" style="table-layout: fixed; width: 100%;">
+                <thead>
+                    <tr>
+                        <th style="width: 200px;">Username</th>
+                        <th style="width: 350px;">Email</th>
+                        <th style="width: 190px;">CreatedDate</th>
+                        <th style="width: 120px;">RatingScore</th>
+                        <th style="width: 100px;">Block</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of paginatedItems">
+                        <td style="
+                            width: 50px;
+                            text-align: left;
+                        ">{{ item.username }}</td>
+                        <td style="text-align: left;">{{ item.email }}</td>
+                        <td>{{ item.createdDate | date:'short'}}</td>
+                        <td>{{ item.ratingScore }}</td>
+                        <td>{{ item.isBlocked }}</td>
+                        <td>
+                            <button *ngIf="item.isBlocked == false" (click)="openBlockModal(item)"
+                                class="btn btn-danger">Block</button>
+                            <button *ngIf="item.isBlocked == true" (click)="openBlockModal(item)"
+                                class="btn btn-info">Unblock</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer clearfix">
+            <ul class="pagination pagination-sm m-0 float-right">
+                <li class="page-item" [class.disabled]="currentPage === 1">
+                    <a class="page-link" (click)="onPageChange(currentPage - 1)">«</a>
+                </li>
+                <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index"
+                    [class.active]="currentPage === i + 1">
+                    <a class="page-link" (click)="onPageChange(i + 1)">{{ i + 1 }}</a>
+                </li>
+                <li class="page-item" [class.disabled]="currentPage === totalPages">
+                    <a class="page-link" (click)="onPageChange(currentPage + 1)">»</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Modal block -->
+    <div *ngIf="showModal && selectedUser.isBlocked == false" class="modal" style="display: block;">
+        <div class="modal-content">
+            <h3>Block User</h3>
+            <p>Are you sure you want to block {{selectedUser.username}}</p>
+            <div class="modal-actions">
+                <button (click)="confirmBlock()" class="btn btn-danger">Confirm</button>
+                <button (click)="closeModal()" class="btn btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="showModal && selectedUser.isBlocked == true" class="modal" style="display: block;">
+        <div class="modal-content">
+            <h3>Unblock User</h3>
+            <p>Are you sure you want to unblock {{selectedUser.username}}</p>
+            <div class="modal-actions">
+                <button (click)="confirmBlock()" class="btn btn-danger">Confirm</button>
+                <button (click)="closeModal()" class="btn btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

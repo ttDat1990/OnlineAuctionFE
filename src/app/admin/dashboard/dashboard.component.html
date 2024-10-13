@@ -1,1 +1,84 @@
-Dashboard
+<div class="container pt-5">
+    <h2 class="text-center mb-4">Admin Dashboard</h2>
+    <div class="row text-center">
+        <!-- Total Users -->
+        <div class="col-md-3">
+            <div class="card shadow-sm mb-4 border-0">
+                <div class="card-body bg-info text-white rounded d-flex flex-column justify-content-between">
+                    <h5 class="card-title mb-1">Total Users</h5>
+                    <p class="h2 mb-0">{{ totalUsers }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- New Users This Week -->
+        <div class="col-md-3">
+            <div class="card shadow-sm mb-4 border-0">
+                <div class="card-body bg-secondary text-white rounded d-flex flex-column justify-content-between">
+                    <h5 class="card-title mb-1">New Users This Week</h5>
+                    <p class="h2 mb-0">{{ newUsersThisWeek }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Items -->
+        <div class="col-md-3">
+            <div class="card shadow-sm mb-4 border-0">
+                <div class="card-body bg-success text-white rounded d-flex flex-column justify-content-between">
+                    <h5 class="card-title mb-1">Total Items for Sale</h5>
+                    <p class="h2 mb-0">{{ totalItems }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Categories -->
+        <div class="col-md-3">
+            <div class="card shadow-sm mb-4 border-0">
+                <div class="card-body bg-warning text-dark rounded d-flex flex-column justify-content-between">
+                    <h5 class="card-title mb-1">Total Categories</h5>
+                    <p class="h2 mb-0">{{ totalCategories }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ongoing Auctions -->
+        <div class="col-md-3">
+            <div class="card shadow-sm mb-4 border-0">
+                <div class="card-body bg-danger text-white rounded d-flex flex-column justify-content-between">
+                    <h5 class="card-title mb-1">Ongoing Auctions</h5>
+                    <p class="h2 mb-0">{{ ongoingAuctions }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ended Auctions -->
+        <div class="col-md-3">
+            <div class="card shadow-sm mb-4 border-0">
+                <div class="card-body bg-dark text-white rounded d-flex flex-column justify-content-between">
+                    <h5 class="card-title mb-1">Ended Auctions</h5>
+                    <p class="h2 mb-0">{{ endedAuctions }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Most Favorited Item -->
+        <div class="col-md-3">
+            <div class="card shadow-sm mb-4 border-0">
+                <div class="card-body bg-primary text-white rounded d-flex flex-column justify-content-between">
+                    <h5 class="card-title mb-1">Most Favorited Item</h5>
+                    <p class="h4 item-title mb-0">{{ mostFavoritedItem }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Users with Low Ratings -->
+        <div class="col-md-3">
+            <div class="card shadow-sm mb-4 border-0">
+                <div class="card-body bg-danger text-white rounded d-flex flex-column justify-content-between">
+                    <h5 class="card-title mb-1">Users with Low Ratings</h5>
+                    <p class="h2 mb-0">{{ usersWithLowRatings }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

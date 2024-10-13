@@ -23,6 +23,8 @@
                             <button (click)="openUpdateCategoryModal(category)"
                                 class="btn btn-warning mr-2">Update</button>
                             <button (click)="deleteCategory(category.categoryId)" class="btn btn-danger">Delete</button>
+                            <button (click)="openMergeModal(category.categoryId, category.categoryName)"
+                                class="btn btn-primary ml-2">Merge</button>
                         </td>
                     </tr>
                 </tbody>
@@ -72,6 +74,34 @@
                     (click)="isEditMode ? updateCategory() : createCategory()">
                     {{ isEditMode ? 'Update' : 'Create' }}
                 </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" [ngClass]="{'show': showMergeModal}"
+    [style.display]="showMergeModal ? 'block' : 'none'">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Merge Categories</h5>
+                <button type="button" class="close" (click)="closeModal()">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Select categories to merge into <strong>{{ targetCategoryName }}</strong> category:</p>
+                <div *ngFor="let category of categories">
+                    <div *ngIf="category.categoryId !== targetCategoryId">
+                        <input type="checkbox" [value]="category.categoryId"
+                            (change)="toggleCategorySelection(category.categoryId)" />
+                        {{ category.categoryName }}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+                <button type="button" class="btn btn-primary" (click)="mergeCategories()">Merge</button>
             </div>
         </div>
     </div>

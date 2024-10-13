@@ -1,0 +1,25 @@
+.item-title {
+  white-space: nowrap;
+  /* Ngăn dòng tự động */
+  overflow: hidden;
+  /* Ẩn phần tràn ra */
+  text-overflow: ellipsis;
+  /* Thêm dấu "..." nếu tràn */
+}
+
+.card-body {
+  min-height: 120px;
+  /* Điều chỉnh chiều cao tối thiểu nếu cần */
+}
+
+.card-body {
+  background-color: #f8f9fa;
+  /* Màu nền nhẹ cho tất cả các thẻ */
+  transition: background-color 0.3s;
+  /* Hiệu ứng chuyển màu mượt mà */
+}
+
+.card-body:hover {
+  background-color: #e2e6ea;
+  /* Màu nền khi di chuột vào thẻ */
+}
